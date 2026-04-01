@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Scenario",
+  "type": "object",
+  "required": ["id", "title", "status", "function", "industry", "pain", "solution", "tools", "complexity", "budget", "timeToResult", "companySize"],
+  "properties": {
+    "id": { "type": "string", "description": "Уникальный ID сценария, например scenario-001" },
+    "title": { "type": "string" },
+    "status": { "type": "string", "enum": ["verified", "hypothesis", "in-progress"] },
+    "function": {
+      "type": "string",
+      "enum": ["sales", "marketing", "hr", "finance", "operations", "customer-service", "it", "legal", "management"]
+    },
+    "industry": {
+      "type": "string",
+      "enum": ["universal", "retail", "manufacturing", "services", "real-estate", "education", "healthcare", "fintech", "it-company"]
+    },
+    "companySize": {
+      "type": "array",
+      "items": { "enum": ["small", "medium", "large"] }
+    },
+    "complexity": { "type": "string", "enum": ["no-code", "low-code", "custom-dev"] },
+    "budget": { "type": "string", "enum": ["free", "low", "medium", "high"] },
+    "timeToResult": { "type": "string", "enum": ["days", "weeks", "months"] },
+    "pain": { "type": "string" },
+    "solution": { "type": "string" },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "kpis": {
+      "type": "array",
+      "items": { "enum": ["time-saving", "revenue-growth", "error-reduction", "scaling", "nps", "cost-reduction"] }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "artifacts": {
+      "type": "array",
+      "items": { "enum": ["prompts", "process-schema", "template", "code"] }
+    },
+    "author": { "type": "string" },
+    "date": { "type": "string", "format": "date" }
+  }
+}
