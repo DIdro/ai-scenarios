@@ -1,11 +1,24 @@
 'use client'
 
-import { FUNCTION_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS } from '@/lib/scenario-types'
+import { FUNCTION_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS, MATURITY_LABELS } from '@/lib/scenario-types'
+
+const INDUSTRY_LABELS: Record<string, string> = {
+  universal: 'Любая',
+  manufacturing: 'Производство',
+  services: 'Услуги',
+  retail: 'Ритейл',
+  'it-company': 'ИТ-компания',
+  education: 'Образование',
+  healthcare: 'Медицина',
+  fintech: 'Финтех',
+}
 
 export type FilterState = {
   function: string
   autonomy: string
   ai_pattern: string
+  industry: string
+  process_maturity: string
   search: string
 }
 
@@ -25,17 +38,21 @@ export default function Filters({ filters, onChange }: {
         placeholder="Поиск..."
         value={filters.search}
         onChange={e => set('search', e.target.value)}
-        className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 w-48"
+        className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 w-44"
       />
       <Select value={filters.function} onChange={v => set('function', v)}
         options={[['', 'Функция'], ...Object.entries(FUNCTION_LABELS)]} />
+      <Select value={filters.industry} onChange={v => set('industry', v)}
+        options={[['', 'Отрасль'], ...Object.entries(INDUSTRY_LABELS)]} />
       <Select value={filters.autonomy} onChange={v => set('autonomy', v)}
         options={[['', 'Автономность'], ...Object.entries(AUTONOMY_LABELS)]} />
       <Select value={filters.ai_pattern} onChange={v => set('ai_pattern', v)}
         options={[['', 'Паттерн ИИ'], ...Object.entries(AI_PATTERN_LABELS)]} />
+      <Select value={filters.process_maturity} onChange={v => set('process_maturity', v)}
+        options={[['', 'Зрелость'], ...Object.entries(MATURITY_LABELS)]} />
       {hasActive && (
         <button
-          onClick={() => onChange({ function: '', autonomy: '', ai_pattern: '', search: '' })}
+          onClick={() => onChange({ function: '', autonomy: '', ai_pattern: '', industry: '', process_maturity: '', search: '' })}
           className="text-xs text-gray-400 hover:text-gray-700 underline"
         >Сбросить</button>
       )}
