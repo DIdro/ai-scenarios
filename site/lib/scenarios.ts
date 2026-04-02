@@ -7,7 +7,7 @@ import type { Scenario } from './scenario-types'
 export type { Scenario }
 export { FUNCTION_LABELS, STATUS_LABELS, COMPLEXITY_LABELS, TIME_LABELS, BUDGET_LABELS } from './scenario-types'
 
-const SCENARIOS_DIR = path.join(process.cwd(), '..', 'scenarios')
+const SCENARIOS_DIR = path.join(process.cwd(), 'scenarios')
 
 function parseTableField(content: string, field: string): string {
   const regex = new RegExp(`\\|\\s*\\*\\*${field}\\*\\*\\s*\\|\\s*(.+?)\\s*\\|`, 'i')
