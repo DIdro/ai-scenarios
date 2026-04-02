@@ -1,12 +1,11 @@
 'use client'
 
-import { FUNCTION_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS, STATUS_LABELS, MATURITY_LABELS } from '@/lib/scenario-types'
+import { FUNCTION_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS } from '@/lib/scenario-types'
 
 export type FilterState = {
   function: string
   autonomy: string
   ai_pattern: string
-  status: string
   search: string
 }
 
@@ -17,7 +16,7 @@ export default function Filters({ filters, onChange }: {
   const set = (key: keyof FilterState, value: string) =>
     onChange({ ...filters, [key]: value })
 
-  const hasActive = Object.entries(filters).some(([k, v]) => k !== 'search' ? v !== '' : v !== '')
+  const hasActive = Object.values(filters).some(v => v !== '')
 
   return (
     <div className="flex flex-wrap gap-2 items-center">
@@ -34,11 +33,9 @@ export default function Filters({ filters, onChange }: {
         options={[['', 'Автономность'], ...Object.entries(AUTONOMY_LABELS)]} />
       <Select value={filters.ai_pattern} onChange={v => set('ai_pattern', v)}
         options={[['', 'Паттерн ИИ'], ...Object.entries(AI_PATTERN_LABELS)]} />
-      <Select value={filters.status} onChange={v => set('status', v)}
-        options={[['', 'Статус'], ...Object.entries(STATUS_LABELS)]} />
       {hasActive && (
         <button
-          onClick={() => onChange({ function: '', autonomy: '', ai_pattern: '', status: '', search: '' })}
+          onClick={() => onChange({ function: '', autonomy: '', ai_pattern: '', search: '' })}
           className="text-xs text-gray-400 hover:text-gray-700 underline"
         >Сбросить</button>
       )}

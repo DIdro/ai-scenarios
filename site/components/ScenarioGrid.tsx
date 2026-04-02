@@ -8,7 +8,7 @@ import ProposeModal from './ProposeModal'
 
 export default function ScenarioGrid({ scenarios }: { scenarios: Scenario[] }) {
   const [filters, setFilters] = useState<FilterState>({
-    function: '', autonomy: '', ai_pattern: '', status: '', search: '',
+    function: '', autonomy: '', ai_pattern: '', search: '',
   })
   const [open, setOpen] = useState(false)
 
@@ -16,7 +16,6 @@ export default function ScenarioGrid({ scenarios }: { scenarios: Scenario[] }) {
     if (filters.function && s.function !== filters.function) return false
     if (filters.autonomy && s.autonomy !== filters.autonomy) return false
     if (filters.ai_pattern && !s.ai_pattern.includes(filters.ai_pattern)) return false
-    if (filters.status && s.status !== filters.status) return false
     if (filters.search) {
       const q = filters.search.toLowerCase()
       return (
