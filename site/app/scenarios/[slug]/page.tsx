@@ -14,11 +14,12 @@ const statusColor: Record<string, string> = {
   'in-progress': 'bg-blue-50 text-blue-700 border-blue-200',
 }
 
-export default function ScenarioPage({ params }: { params: { slug: string } }) {
-  const scenario = getScenarioBySlug(params.slug)
+export default async function ScenarioPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const scenario = getScenarioBySlug(slug)
   if (!scenario) notFound()
 
-  const sections = parseSections(scenario.content)
+  const sections = parseSections(scenario!.content)
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-10">
