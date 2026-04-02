@@ -1,55 +1,46 @@
 'use client'
 
-import { FUNCTION_LABELS, COMPLEXITY_LABELS, STATUS_LABELS } from '@/lib/scenario-types'
+import { FUNCTION_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS, STATUS_LABELS, MATURITY_LABELS } from '@/lib/scenario-types'
 
 export type FilterState = {
   function: string
-  complexity: string
+  autonomy: string
+  ai_pattern: string
   status: string
   search: string
 }
 
-export default function Filters({
-  filters,
-  onChange,
-}: {
+export default function Filters({ filters, onChange }: {
   filters: FilterState
   onChange: (f: FilterState) => void
 }) {
   const set = (key: keyof FilterState, value: string) =>
     onChange({ ...filters, [key]: value })
 
+  const hasActive = Object.entries(filters).some(([k, v]) => k !== 'search' ? v !== '' : v !== '')
+
   return (
-    <div className="flex flex-wrap gap-3 items-center">
+    <div className="flex flex-wrap gap-2 items-center">
       <input
         type="search"
-        placeholder="Поиск по названию или тегу..."
+        placeholder="Поиск..."
         value={filters.search}
         onChange={e => set('search', e.target.value)}
-        className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 w-60"
+        className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 w-48"
       />
-      <Select
-        value={filters.function}
-        onChange={v => set('function', v)}
-        options={[['', 'Все функции'], ...Object.entries(FUNCTION_LABELS)]}
-      />
-      <Select
-        value={filters.complexity}
-        onChange={v => set('complexity', v)}
-        options={[['', 'Любая сложность'], ...Object.entries(COMPLEXITY_LABELS)]}
-      />
-      <Select
-        value={filters.status}
-        onChange={v => set('status', v)}
-        options={[['', 'Любой статус'], ...Object.entries(STATUS_LABELS)]}
-      />
-      {(filters.function || filters.complexity || filters.status || filters.search) && (
+      <Select value={filters.function} onChange={v => set('function', v)}
+        options={[['', 'Функция'], ...Object.entries(FUNCTION_LABELS)]} />
+      <Select value={filters.autonomy} onChange={v => set('autonomy', v)}
+        options={[['', 'Автономность'], ...Object.entries(AUTONOMY_LABELS)]} />
+      <Select value={filters.ai_pattern} onChange={v => set('ai_pattern', v)}
+        options={[['', 'Паттерн ИИ'], ...Object.entries(AI_PATTERN_LABELS)]} />
+      <Select value={filters.status} onChange={v => set('status', v)}
+        options={[['', 'Статус'], ...Object.entries(STATUS_LABELS)]} />
+      {hasActive && (
         <button
-          onClick={() => onChange({ function: '', complexity: '', status: '', search: '' })}
+          onClick={() => onChange({ function: '', autonomy: '', ai_pattern: '', status: '', search: '' })}
           className="text-xs text-gray-400 hover:text-gray-700 underline"
-        >
-          Сбросить
-        </button>
+        >Сбросить</button>
       )}
     </div>
   )
@@ -61,14 +52,9 @@ function Select({ value, onChange, options }: {
   options: [string, string][]
 }) {
   return (
-    <select
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 bg-white text-gray-700"
-    >
-      {options.map(([val, label]) => (
-        <option key={val} value={val}>{label}</option>
-      ))}
+    <select value={value} onChange={e => onChange(e.target.value)}
+      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black/10 bg-white text-gray-700">
+      {options.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
     </select>
   )
 }

@@ -1,5 +1,5 @@
 import { getAllScenarios, getScenarioBySlug } from '@/lib/scenarios'
-import { FUNCTION_LABELS, STATUS_LABELS, COMPLEXITY_LABELS, TIME_LABELS, BUDGET_LABELS } from '@/lib/scenario-types'
+import { FUNCTION_LABELS, STATUS_LABELS, COMPLEXITY_LABELS, TIME_LABELS, BUDGET_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS, MATURITY_LABELS } from '@/lib/scenario-types'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import ProposeButton from '@/components/ProposeButton'
@@ -61,11 +61,13 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
 
         <aside className="space-y-4">
           <div className="border border-gray-100 rounded-xl p-4 text-sm space-y-3">
+            <MetaRow label="Автономность" value={AUTONOMY_LABELS[scenario.autonomy] ?? scenario.autonomy} />
+            <MetaRow label="Паттерн ИИ" value={scenario.ai_pattern.map(p => AI_PATTERN_LABELS[p] ?? p).join(', ')} />
+            <MetaRow label="Зрелость процесса" value={MATURITY_LABELS[scenario.process_maturity] ?? scenario.process_maturity} />
             <MetaRow label="Сложность" value={COMPLEXITY_LABELS[scenario.complexity] ?? scenario.complexity} />
             <MetaRow label="Срок" value={TIME_LABELS[scenario.timeToResult] ?? scenario.timeToResult} />
             <MetaRow label="Бюджет" value={BUDGET_LABELS[scenario.budget] ?? scenario.budget} />
             <MetaRow label="Отрасль" value={scenario.industry === 'universal' ? 'Любая' : scenario.industry} />
-            <MetaRow label="Размер компании" value={scenario.companySize.join(', ')} />
           </div>
           <ProposeButton />
         </aside>

@@ -5,36 +5,40 @@ import matter from 'gray-matter'
 import type { Scenario } from './scenario-types'
 
 export type { Scenario }
-export { FUNCTION_LABELS, STATUS_LABELS, COMPLEXITY_LABELS, TIME_LABELS, BUDGET_LABELS } from './scenario-types'
+export {
+  FUNCTION_LABELS, STATUS_LABELS, COMPLEXITY_LABELS, TIME_LABELS,
+  BUDGET_LABELS, AUTONOMY_LABELS, AI_PATTERN_LABELS, MATURITY_LABELS
+} from './scenario-types'
 
 const SCENARIOS_DIR = path.join(process.cwd(), 'scenarios')
 
-function parseTableField(content: string, field: string): string {
+function parseField(content: string, field: string): string {
   const regex = new RegExp(`\\|\\s*\\*\\*${field}\\*\\*\\s*\\|\\s*(.+?)\\s*\\|`, 'i')
-  const match = content.match(regex)
-  if (!match) return ''
-  return match[1].replace(/`/g, '').trim()
+  const m = content.match(regex)
+  if (!m) return ''
+  return m[1].replace(/`/g, '').trim()
 }
 
-function parseCompanySize(raw: string): string[] {
+function parseMulti(raw: string): string[] {
   return raw.split(',').map(s => s.trim()).filter(Boolean)
 }
 
 function parseTags(content: string): string[] {
-  const match = content.match(/## Теги\n\n(.+)/m)
-  if (!match) return []
-  return match[1].split(',').map(s => s.replace(/`/g, '').trim()).filter(Boolean)
+  const m = content.match(/## Теги\n\n(.+)/m)
+  if (!m) return []
+  return m[1].split(',').map(s => s.replace(/`/g, '').trim()).filter(Boolean)
 }
 
 function parsePain(content: string): string {
-  const match = content.match(/## Боль\n\n([\s\S]+?)(?=\n## )/)
-  if (!match) return ''
-  return match[1].trim()
+  const m = content.match(/## Боль\n\n([\s\S]+?)(?=\n## )/)
+  if (!m) return ''
+  return m[1].trim()
 }
 
 export function getAllScenarios(): Scenario[] {
   if (!fs.existsSync(SCENARIOS_DIR)) return []
-  const files = fs.readdirSync(SCENARIOS_DIR).filter(f => f.endsWith('.md') && f !== '.gitkeep')
+  const files = fs.readdirSync(SCENARIOS_DIR)
+    .filter(f => f.endsWith('.md') && !f.startsWith('ONTOLOGY'))
 
   return files.map(filename => {
     const slug = filename.replace('.md', '')
@@ -45,14 +49,19 @@ export function getAllScenarios(): Scenario[] {
     return {
       slug,
       title,
-      id: parseTableField(content, 'ID'),
-      status: parseTableField(content, 'Статус') as Scenario['status'],
-      function: parseTableField(content, 'Функция'),
-      industry: parseTableField(content, 'Отрасль'),
-      companySize: parseCompanySize(parseTableField(content, 'Размер компании')),
-      complexity: parseTableField(content, 'Сложность') as Scenario['complexity'],
-      budget: parseTableField(content, 'Бюджет') as Scenario['budget'],
-      timeToResult: parseTableField(content, 'Срок до результата') as Scenario['timeToResult'],
+      id: parseField(content, 'ID'),
+      status: parseField(content, 'status') as Scenario['status'],
+      ai_pattern: parseMulti(parseField(content, 'ai_pattern')),
+      function: parseField(content, 'function'),
+      industry: parseField(content, 'industry'),
+      autonomy: parseField(content, 'autonomy') as Scenario['autonomy'],
+      process_maturity: parseField(content, 'process_maturity') as Scenario['process_maturity'],
+      effect: parseMulti(parseField(content, 'effect')),
+      scale: parseField(content, 'scale') as Scenario['scale'],
+      input_type: parseMulti(parseField(content, 'input_type')),
+      complexity: parseField(content, 'complexity') as Scenario['complexity'],
+      budget: parseField(content, 'budget') as Scenario['budget'],
+      timeToResult: parseField(content, 'time_to_result') as Scenario['timeToResult'],
       tags: parseTags(content),
       pain: parsePain(content),
       content,
