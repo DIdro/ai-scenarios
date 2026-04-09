@@ -24,10 +24,15 @@ declare global {
 export default function SearchBox() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [isMac, setIsMac] = useState(false)
   const [results, setResults] = useState<
     Array<{ url: string; title: string; excerpt: string }>
   >([])
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform))
+  }, [])
 
   // load pagefind once on first open — eval-wrapped so the bundler ignores it
   useEffect(() => {
@@ -96,8 +101,12 @@ export default function SearchBox() {
         onClick={() => setOpen(true)}
         className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 border border-gray-200 rounded-full flex items-center gap-2 transition-colors"
       >
+        <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
         <span>Поиск</span>
-        <kbd className="text-xs text-gray-400 hidden md:inline">⌘K</kbd>
+        <kbd className="text-xs text-gray-400 hidden md:inline">{isMac ? '⌘K' : 'Ctrl+K'}</kbd>
       </button>
 
       {open && (

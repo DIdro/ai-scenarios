@@ -12,7 +12,6 @@ export type CategoryMeta = {
   title: string
   description: string
   accent: string // Tailwind color name (для левой полоски, hover, hero)
-  icon: string
   subcategories: SubcategoryMeta[]
 }
 
@@ -22,7 +21,6 @@ export const TREE: CategoryMeta[] = [
     title: 'Операции',
     description: 'Автоматизация ежедневной операционной работы: совещания, документация, планирование, отчётность.',
     accent: 'amber',
-    icon: '⚙️',
     subcategories: [
       {
         slug: 'meetings',
@@ -56,7 +54,6 @@ export const TREE: CategoryMeta[] = [
     title: 'Продажи',
     description: 'Подготовка предложений, разведка рынка, работа с клиентами.',
     accent: 'emerald',
-    icon: '📈',
     subcategories: [
       {
         slug: 'proposals',
@@ -75,7 +72,6 @@ export const TREE: CategoryMeta[] = [
     title: 'Управление персоналом',
     description: 'Подбор, адаптация, развитие сотрудников.',
     accent: 'rose',
-    icon: '👥',
     subcategories: [
       {
         slug: 'recruiting',
@@ -118,8 +114,11 @@ export const ACCENT_CLASSES: Record<
     bg: string
     bgSoft: string
     text: string
+    textStrong: string
     ring: string
     hoverBg: string
+    iconBg: string
+    iconText: string
   }
 > = {
   amber: {
@@ -127,32 +126,44 @@ export const ACCENT_CLASSES: Record<
     bg: 'bg-amber-500',
     bgSoft: 'bg-amber-50',
     text: 'text-amber-700',
+    textStrong: 'text-amber-900',
     ring: 'ring-amber-200',
     hoverBg: 'hover:bg-amber-50',
+    iconBg: 'bg-amber-100',
+    iconText: 'text-amber-700',
   },
   emerald: {
     border: 'border-l-emerald-400',
     bg: 'bg-emerald-500',
     bgSoft: 'bg-emerald-50',
     text: 'text-emerald-700',
+    textStrong: 'text-emerald-900',
     ring: 'ring-emerald-200',
     hoverBg: 'hover:bg-emerald-50',
+    iconBg: 'bg-emerald-100',
+    iconText: 'text-emerald-700',
   },
   rose: {
     border: 'border-l-rose-400',
     bg: 'bg-rose-500',
     bgSoft: 'bg-rose-50',
     text: 'text-rose-700',
+    textStrong: 'text-rose-900',
     ring: 'ring-rose-200',
     hoverBg: 'hover:bg-rose-50',
+    iconBg: 'bg-rose-100',
+    iconText: 'text-rose-700',
   },
   blue: {
     border: 'border-l-blue-400',
     bg: 'bg-blue-500',
     bgSoft: 'bg-blue-50',
     text: 'text-blue-700',
+    textStrong: 'text-blue-900',
     ring: 'ring-blue-200',
     hoverBg: 'hover:bg-blue-50',
+    iconBg: 'bg-blue-100',
+    iconText: 'text-blue-700',
   },
 }
 

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TREE, ACCENT_CLASSES } from '@/lib/tree'
 import { countArticlesInCategory, countArticlesInSubcategory } from '@/lib/content'
+import CategoryIcon from './CategoryIcon'
 
 type Props = {
   activeCategory?: string
@@ -25,7 +26,9 @@ export default function CategoryTree({ activeCategory, activeSubcategory }: Prop
                 }`}
               >
                 <span className="flex items-center gap-2">
-                  <span className="text-base">{category.icon}</span>
+                  <span className={isActiveCat ? accent.iconText : 'text-gray-400'}>
+                    <CategoryIcon slug={category.slug} className="w-4 h-4" />
+                  </span>
                   {category.title}
                 </span>
                 <span className="text-xs text-gray-400 tabular-nums">{count}</span>

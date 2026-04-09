@@ -14,6 +14,8 @@ import CategoryTree from '@/components/CategoryTree'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ArticleCard from '@/components/ArticleCard'
 import ArticleHeader from '@/components/ArticleHeader'
+import CategoryIcon from '@/components/CategoryIcon'
+import { nArticles } from '@/lib/pluralize'
 
 export const dynamicParams = false
 
@@ -92,33 +94,41 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
     <PageShell activeCategory={categorySlug}>
       <Breadcrumbs items={[{ label: category.title }]} />
 
-      <header className="mb-10">
-        <div className={`inline-flex items-center gap-2 text-sm ${accent.text} mb-3`}>
-          <span>{category.icon}</span>
-          <span className="uppercase tracking-wider text-xs font-medium">Категория</span>
+      <header className="mb-10 flex items-start gap-4">
+        <div
+          className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
+        >
+          <CategoryIcon slug={category.slug} className="w-6 h-6" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-3 leading-tight">
-          {category.title}
-        </h1>
-        <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{category.description}</p>
+        <div>
+          <div className={`text-xs uppercase tracking-wider font-medium ${accent.text} mb-1`}>
+            Категория
+          </div>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-3 leading-tight">
+            {category.title}
+          </h1>
+          <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{category.description}</p>
+        </div>
       </header>
 
       <section className="mb-12">
         <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-4">
           Подкатегории
         </h2>
-        <ul className="grid sm:grid-cols-2 gap-px bg-gray-100 border border-gray-100 rounded-xl overflow-hidden">
+        <ul className="grid sm:grid-cols-2 gap-3">
           {category.subcategories.map((sub) => {
             const count = articles.filter((a) => a.subcategory === sub.slug).length
             return (
-              <li key={sub.slug} className="bg-white">
+              <li key={sub.slug}>
                 <a
                   href={`/${category.slug}/${sub.slug}/`}
-                  className="block p-5 hover:bg-gray-50 transition-colors h-full"
+                  className="block p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all h-full"
                 >
-                  <div className="flex items-baseline justify-between mb-1.5">
+                  <div className="flex items-baseline justify-between mb-1.5 gap-3">
                     <h3 className="font-medium text-gray-900">{sub.title}</h3>
-                    <span className="text-xs text-gray-400 tabular-nums">{count}</span>
+                    <span className="text-xs text-gray-400 tabular-nums shrink-0">
+                      {nArticles(count)}
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
                 </a>
@@ -166,9 +176,8 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
       />
 
       <header className="mb-10">
-        <div className={`inline-flex items-center gap-2 text-sm ${accent.text} mb-3`}>
-          <span>{category.icon}</span>
-          <span className="uppercase tracking-wider text-xs font-medium">{category.title}</span>
+        <div className={`text-xs uppercase tracking-wider font-medium ${accent.text} mb-2`}>
+          {category.title}
         </div>
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-3 leading-tight">
           {subcategory.title}

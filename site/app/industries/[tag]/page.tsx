@@ -4,6 +4,7 @@ import { INDUSTRIES } from '@/lib/tree'
 import { getArticlesByIndustry, getAllIndustries } from '@/lib/content'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ArticleCard from '@/components/ArticleCard'
+import { nArticles } from '@/lib/pluralize'
 
 export const dynamicParams = false
 
@@ -46,8 +47,7 @@ export default async function IndustryPage({
           {name}
         </h1>
         <p className="text-gray-600">
-          Сценарии, применимые в отрасли «{name}» — {articles.length}{' '}
-          {pluralize(articles.length, ['статья', 'статьи', 'статей'])}.
+          Сценарии, применимые в отрасли «{name}» — {nArticles(articles.length)}.
         </p>
       </header>
 
@@ -64,12 +64,4 @@ export default async function IndustryPage({
       )}
     </div>
   )
-}
-
-function pluralize(n: number, forms: [string, string, string]): string {
-  const mod10 = n % 10
-  const mod100 = n % 100
-  if (mod10 === 1 && mod100 !== 11) return forms[0]
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return forms[1]
-  return forms[2]
 }
