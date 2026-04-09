@@ -58,6 +58,13 @@ export default function HomePage() {
         </ul>
       </section>
 
+      <section className="mb-16">
+        <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
+          По отраслям
+        </h2>
+        <IndustryTagCloud />
+      </section>
+
       {recent.length > 0 && (
         <section className="mb-16">
           <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
@@ -72,13 +79,6 @@ export default function HomePage() {
           </ul>
         </section>
       )}
-
-      <section className="mb-16">
-        <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
-          По отраслям
-        </h2>
-        <IndustryTagCloud />
-      </section>
     </div>
   )
 }
