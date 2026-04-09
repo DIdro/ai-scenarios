@@ -14,6 +14,7 @@ import CategoryTree from '@/components/CategoryTree'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ArticleCard from '@/components/ArticleCard'
 import ArticleHeader from '@/components/ArticleHeader'
+import ArticleByline from '@/components/ArticleByline'
 import CategoryIcon from '@/components/CategoryIcon'
 import { nArticles } from '@/lib/pluralize'
 
@@ -243,6 +244,7 @@ async function ArticleView({
         <div className="prose prose-gray prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-lg prose-p:leading-relaxed prose-a:text-gray-900 prose-a:underline prose-a:underline-offset-2 prose-strong:font-semibold prose-strong:text-gray-900 max-w-none">
           <MDXContent />
         </div>
+        <ArticleByline frontmatter={article.frontmatter} />
       </article>
 
       {related.length > 0 && (
