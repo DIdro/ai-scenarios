@@ -123,15 +123,30 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
               <li key={sub.slug}>
                 <a
                   href={`/${category.slug}/${sub.slug}/`}
-                  className="block p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all h-full"
+                  className={`group relative flex items-start gap-4 h-full p-5 rounded-xl border border-gray-200 border-l-[3px] ${accent.border} bg-white ${accent.hoverBg} hover:shadow-sm transition-all`}
                 >
-                  <div className="flex items-baseline justify-between mb-1.5 gap-3">
-                    <h3 className="font-medium text-gray-900">{sub.title}</h3>
-                    <span className="text-xs text-gray-400 tabular-nums shrink-0">
-                      {nArticles(count)}
-                    </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between mb-1.5 gap-3">
+                      <h3 className="font-medium text-gray-900 group-hover:text-black">
+                        {sub.title}
+                      </h3>
+                      <span
+                        className={`text-xs tabular-nums shrink-0 px-2 py-0.5 rounded-full ${accent.bgSoft} ${accent.text}`}
+                      >
+                        {nArticles(count)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
                   </div>
-                  <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
+                  <svg
+                    aria-hidden
+                    className="shrink-0 self-center w-4 h-4 text-gray-300 group-hover:text-gray-700 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </a>
               </li>
             )

@@ -35,7 +35,7 @@ export default function HomePage() {
               <li key={category.slug}>
                 <Link
                   href={`/${category.slug}/`}
-                  className={`group block h-full p-6 rounded-2xl border border-gray-200 bg-white ${accent.hoverBg} hover:border-gray-300 hover:shadow-sm transition-all`}
+                  className={`group relative block h-full p-6 rounded-2xl border border-gray-200 border-l-[3px] ${accent.border} bg-white ${accent.hoverBg} hover:border-gray-300 hover:shadow-sm transition-all`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div
@@ -43,14 +43,27 @@ export default function HomePage() {
                     >
                       <CategoryIcon slug={category.slug} className="w-6 h-6" />
                     </div>
-                    <span className="text-xs text-gray-400 tabular-nums">{nArticles(count)}</span>
+                    <span
+                      className={`text-xs tabular-nums px-2 py-0.5 rounded-full ${accent.bgSoft} ${accent.text}`}
+                    >
+                      {nArticles(count)}
+                    </span>
                   </div>
                   <h3 className="font-semibold text-lg text-gray-900 mb-1.5 group-hover:text-black">
                     {category.title}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 pr-6">
                     {category.description}
                   </p>
+                  <svg
+                    aria-hidden
+                    className="absolute bottom-5 right-5 w-4 h-4 text-gray-300 group-hover:text-gray-700 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
               </li>
             )
