@@ -1,9 +1,11 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { INDUSTRIES } from '@/lib/tree'
+import { INDUSTRIES, TREE, ACCENT_CLASSES } from '@/lib/tree'
 import { getArticlesByIndustry, getAllIndustries } from '@/lib/content'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ArticleCard from '@/components/ArticleCard'
+import CategoryIcon from '@/components/CategoryIcon'
 import { nArticles } from '@/lib/pluralize'
 
 export const dynamicParams = false
@@ -35,6 +37,10 @@ export default async function IndustryPage({
   if (!name) notFound()
 
   const articles = getArticlesByIndustry(tag)
+  const groups = TREE.map((category) => ({
+    category,
+    articles: articles.filter((a) => a.category === category.slug),
+  })).filter((g) => g.articles.length > 0)
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
@@ -54,13 +60,40 @@ export default async function IndustryPage({
       {articles.length === 0 ? (
         <p className="text-gray-500 text-sm">Пока нет статей с этой отраслью.</p>
       ) : (
-        <ul className="space-y-1">
-          {articles.map((a) => (
-            <li key={a.href}>
-              <ArticleCard article={a} />
-            </li>
-          ))}
-        </ul>
+        <div className="space-y-10">
+          {groups.map(({ category, articles: group }) => {
+            const accent = ACCENT_CLASSES[category.accent] ?? ACCENT_CLASSES.amber
+            return (
+              <section key={category.slug}>
+                <Link
+                  href={`/${category.slug}/`}
+                  className="group flex items-center gap-3 mb-4"
+                >
+                  <div
+                    className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
+                  >
+                    <CategoryIcon slug={category.slug} className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-xl font-semibold tracking-tight text-gray-900 group-hover:text-black">
+                    {category.title}
+                  </h2>
+                  <span
+                    className={`text-xs tabular-nums px-2 py-0.5 rounded-full ${accent.bgSoft} ${accent.text}`}
+                  >
+                    {nArticles(group.length)}
+                  </span>
+                </Link>
+                <ul className="space-y-1">
+                  {group.map((a) => (
+                    <li key={a.href}>
+                      <ArticleCard article={a} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          })}
+        </div>
       )}
     </div>
   )
