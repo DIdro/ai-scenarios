@@ -51,6 +51,24 @@ export default function CategoryIcon({ slug, className = 'w-6 h-6' }: Props) {
           />
         </svg>
       )
+    case 'products':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+          <path
+            d="M12 2.5l8 4.2v8.6l-8 4.2-8-4.2V6.7l8-4.2z"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M4 6.9l8 4.2 8-4.2M12 11.1V20"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )
     default:
       return (
         <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
