@@ -1,5 +1,8 @@
 // Дерево категорий и подкатегорий — единственный источник правды для русских названий
 // и порядка сортировки. Сами статьи берутся из файловой структуры content/.
+//
+// Таксономия ДИИП: процессная цепочка создания ценности (A–E), а не департаменты.
+// Категория = подсистема, подкатегория = процесс. Сценарии лежат под подкатегорией.
 
 export type SubcategoryMeta = {
   slug: string
@@ -17,99 +20,94 @@ export type CategoryMeta = {
 
 export const TREE: CategoryMeta[] = [
   {
-    slug: 'operations',
-    title: 'Операции',
-    description: 'Автоматизация ежедневной операционной работы: совещания, документация, планирование, отчётность.',
-    accent: 'amber',
+    slug: 'strategy',
+    title: 'A. Стратегия и проектирование',
+    description:
+      'Замысел бизнеса: куда идём, что и как создаём — анализ рынка и проектирование процессов.',
+    accent: 'indigo',
     subcategories: [
       {
-        slug: 'meetings',
-        title: 'Совещания и коммуникации',
-        description: 'Превращение устной коммуникации в структурированные артефакты.',
-      },
-      {
-        slug: 'planning',
-        title: 'Планирование и расписание',
-        description: 'Управление сроками, загрузкой команд, распределением ресурсов.',
-      },
-      {
-        slug: 'reporting',
-        title: 'Отчётность и аналитика',
-        description: 'Самообслуживание руководителей в работе с корпоративными данными.',
-      },
-      {
-        slug: 'knowledge',
-        title: 'Документация и знания',
-        description: 'Доступ сотрудников к корпоративной документации через естественный язык.',
+        slug: 'market-analysis',
+        title: 'Анализ рынка и конкурентов',
+        description:
+          'Мониторинг конкурентов, клиентов и рыночных трендов из открытых источников.',
       },
       {
         slug: 'process-design',
-        title: 'Описание процессов',
-        description: 'Превращение интервью и устных описаний в формальные модели процессов.',
+        title: 'Проектирование процессов',
+        description: 'Описание и моделирование бизнес-процессов и регламентов.',
       },
     ],
   },
   {
-    slug: 'sales',
-    title: 'Продажи',
-    description: 'Подготовка предложений, разведка рынка, работа с клиентами.',
+    slug: 'value-stream',
+    title: 'B. Создание и поставка ценности',
+    description: 'Основной поток работы с клиентом — от предложения до сервиса.',
+    accent: 'sky',
+    subcategories: [
+      {
+        slug: 'sales',
+        title: 'Продажи и предложения',
+        description:
+          'Подготовка коммерческих предложений, анализ запросов и тендеров.',
+      },
+      {
+        slug: 'client-service',
+        title: 'Сервис и работа с клиентами',
+        description: 'Клиентские ИИ-сервисы, расчёты и ответы 24/7.',
+      },
+    ],
+  },
+  {
+    slug: 'data',
+    title: 'C. Данные, аналитика и интеллект',
+    description: 'Топливо для ИИ: аналитика, отчётность, ассистенты и базы знаний.',
     accent: 'emerald',
     subcategories: [
       {
-        slug: 'proposals',
-        title: 'Подготовка предложений',
-        description: 'Анализ запросов клиентов, оценка трудоёмкости, генерация коммерческих предложений.',
+        slug: 'analytics',
+        title: 'Аналитика и отчётность',
+        description:
+          'Самообслуживание руководителей в работе с корпоративными данными.',
       },
       {
-        slug: 'market-intelligence',
-        title: 'Маркетинговая разведка',
-        description: 'Мониторинг конкурентов, отрасли и публичных источников.',
-      },
-      {
-        slug: 'quality-control',
-        title: 'Контроль качества звонков',
-        description: 'Речевая аналитика и оценка разговоров менеджеров с клиентами.',
+        slug: 'ai-knowledge',
+        title: 'ИИ-ассистенты и базы знаний',
+        description:
+          'RAG-поиск и ассистенты поверх корпоративных документов и знаний.',
       },
     ],
   },
   {
-    slug: 'hr',
-    title: 'Управление персоналом',
-    description: 'Подбор, адаптация, развитие сотрудников.',
-    accent: 'rose',
+    slug: 'support',
+    title: 'D. Обеспечение',
+    description: 'Поддерживающие функции бизнеса.',
+    accent: 'violet',
     subcategories: [
       {
-        slug: 'recruiting',
-        title: 'Подбор персонала',
-        description: 'Работа с резюме, скрининг, нормализация данных кандидатов.',
-      },
-      {
-        slug: 'onboarding',
-        title: 'Адаптация',
-        description: 'Сопровождение новых сотрудников в первые недели работы.',
-      },
-      {
-        slug: 'development',
-        title: 'Развитие сотрудников',
-        description: 'Индивидуальные планы развития, обучение, оценка компетенций.',
+        slug: 'hr',
+        title: 'Персонал (HR)',
+        description: 'Подбор, адаптация и развитие сотрудников.',
       },
     ],
   },
   {
-    slug: 'products',
-    title: 'Продукты на ИИ',
-    description: 'ИИ-сервисы как продукт: внутренние ассистенты поверх корпуса знаний и внешние сервисы, обращённые к клиентам.',
-    accent: 'blue',
+    slug: 'management',
+    title: 'E. Управление и контроль',
+    description:
+      'Управление работой и качеством: координация, совещания, контроль.',
+    accent: 'amber',
     subcategories: [
       {
-        slug: 'internal-assistants',
-        title: 'Внутренние ассистенты',
-        description: 'RAG-поиск и ассистенты поверх корпоративных документов и знаний.',
+        slug: 'operations',
+        title: 'Оперативное управление и координация',
+        description: 'Совещания, протоколы, планирование сроков и загрузки команды.',
       },
       {
-        slug: 'client-services',
-        title: 'Сервисы для клиентов',
-        description: 'Внешние ИИ-сервисы, обращённые к клиентам компании — расчёты, заявки, ответы 24/7.',
+        slug: 'quality',
+        title: 'Контроль качества',
+        description:
+          'Оценка и контроль качества работы — например, разговоров с клиентами.',
       },
     ],
   },
@@ -144,16 +142,27 @@ export const ACCENT_CLASSES: Record<
     iconText: string
   }
 > = {
-  amber: {
-    border: 'border-l-amber-400',
-    bg: 'bg-amber-500',
-    bgSoft: 'bg-amber-50',
-    text: 'text-amber-700',
-    textStrong: 'text-amber-900',
-    ring: 'ring-amber-200',
-    hoverBg: 'hover:bg-amber-50',
-    iconBg: 'bg-amber-100',
-    iconText: 'text-amber-700',
+  indigo: {
+    border: 'border-l-indigo-400',
+    bg: 'bg-indigo-500',
+    bgSoft: 'bg-indigo-50',
+    text: 'text-indigo-700',
+    textStrong: 'text-indigo-900',
+    ring: 'ring-indigo-200',
+    hoverBg: 'hover:bg-indigo-50',
+    iconBg: 'bg-indigo-100',
+    iconText: 'text-indigo-700',
+  },
+  sky: {
+    border: 'border-l-sky-400',
+    bg: 'bg-sky-500',
+    bgSoft: 'bg-sky-50',
+    text: 'text-sky-700',
+    textStrong: 'text-sky-900',
+    ring: 'ring-sky-200',
+    hoverBg: 'hover:bg-sky-50',
+    iconBg: 'bg-sky-100',
+    iconText: 'text-sky-700',
   },
   emerald: {
     border: 'border-l-emerald-400',
@@ -166,27 +175,27 @@ export const ACCENT_CLASSES: Record<
     iconBg: 'bg-emerald-100',
     iconText: 'text-emerald-700',
   },
-  rose: {
-    border: 'border-l-rose-400',
-    bg: 'bg-rose-500',
-    bgSoft: 'bg-rose-50',
-    text: 'text-rose-700',
-    textStrong: 'text-rose-900',
-    ring: 'ring-rose-200',
-    hoverBg: 'hover:bg-rose-50',
-    iconBg: 'bg-rose-100',
-    iconText: 'text-rose-700',
+  violet: {
+    border: 'border-l-violet-400',
+    bg: 'bg-violet-500',
+    bgSoft: 'bg-violet-50',
+    text: 'text-violet-700',
+    textStrong: 'text-violet-900',
+    ring: 'ring-violet-200',
+    hoverBg: 'hover:bg-violet-50',
+    iconBg: 'bg-violet-100',
+    iconText: 'text-violet-700',
   },
-  blue: {
-    border: 'border-l-blue-400',
-    bg: 'bg-blue-500',
-    bgSoft: 'bg-blue-50',
-    text: 'text-blue-700',
-    textStrong: 'text-blue-900',
-    ring: 'ring-blue-200',
-    hoverBg: 'hover:bg-blue-50',
-    iconBg: 'bg-blue-100',
-    iconText: 'text-blue-700',
+  amber: {
+    border: 'border-l-amber-400',
+    bg: 'bg-amber-500',
+    bgSoft: 'bg-amber-50',
+    text: 'text-amber-700',
+    textStrong: 'text-amber-900',
+    ring: 'ring-amber-200',
+    hoverBg: 'hover:bg-amber-50',
+    iconBg: 'bg-amber-100',
+    iconText: 'text-amber-700',
   },
 }
 
