@@ -16,7 +16,7 @@ export default function Header() {
             href="/"
             className="font-semibold text-sm tracking-tight text-black hover:opacity-70 transition-opacity shrink-0"
           >
-            AI Scenarios
+            Библиотека ДИИП
           </Link>
           <div className="flex items-center gap-3">
             <SearchBox />

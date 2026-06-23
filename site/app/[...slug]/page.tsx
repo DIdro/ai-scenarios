@@ -47,13 +47,13 @@ export async function generateMetadata({
 
   if (slug.length === 1) {
     const cat = getCategory(slug[0])
-    if (cat) return { title: `${cat.title} — AI Scenarios`, description: cat.description }
+    if (cat) return { title: `${cat.title} — Библиотека ДИИП`, description: cat.description }
   }
   if (slug.length === 2) {
     const found = getSubcategory(slug[0], slug[1])
     if (found) {
       return {
-        title: `${found.subcategory.title} — ${found.category.title} — AI Scenarios`,
+        title: `${found.subcategory.title} — ${found.category.title} — Библиотека ДИИП`,
         description: found.subcategory.description,
       }
     }
@@ -62,7 +62,7 @@ export async function generateMetadata({
     const article = getArticle(slug[0], slug[1], slug[2])
     if (article) {
       return {
-        title: `${article.frontmatter.title} — AI Scenarios`,
+        title: `${article.frontmatter.title} — Библиотека ДИИП`,
         description: article.frontmatter.description,
       }
     }
@@ -81,9 +81,9 @@ export default async function CatchAllPage({ params }: { params: Promise<Params>
   notFound()
 }
 
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 // Category page
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 function CategoryView({ categorySlug }: { categorySlug: string }) {
   const category = getCategory(categorySlug)
   if (!category) notFound()
@@ -172,9 +172,9 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 // Subcategory page
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subSlug: string }) {
   const found = getSubcategory(categorySlug, subSlug)
   if (!found) notFound()
@@ -216,9 +216,9 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 // Article page
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 async function ArticleView({
   categorySlug,
   subSlug,
@@ -280,9 +280,9 @@ async function ArticleView({
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 // Layout shell
-// ─────────────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────
 function PageShell({
   children,
   activeCategory,
