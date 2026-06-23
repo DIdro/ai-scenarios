@@ -75,7 +75,7 @@ export default function ProposeModal({ onClose }: { onClose: () => void }) {
               </div>
 
               <input type="hidden" name="_replyto" value="gmdidro@gmail.com" />
-              <input type="hidden" name="_subject" value="Новый сценарий на модерацию — AI Scenarios Library" />
+              <input type="hidden" name="_subject" value="Новый сценарий на модерацию — Библиотека ДИИП" />
 
               <button
                 type="submit"
