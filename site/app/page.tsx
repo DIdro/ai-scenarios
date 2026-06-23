@@ -3,28 +3,36 @@ import { TREE, ACCENT_CLASSES } from '@/lib/tree'
 import { getAllArticles, countArticlesInCategory } from '@/lib/content'
 import ArticleCard from '@/components/ArticleCard'
 import IndustryTagCloud from '@/components/IndustryTagCloud'
-import CategoryIcon from '@/components/CategoryIcon'
+import SearchBox from '@/components/SearchBox'
 import { nArticles } from '@/lib/pluralize'
 
 export default function HomePage() {
-  const recent = getAllArticles().slice(0, 3)
+  const all = getAllArticles()
+  const recent = all.slice(0, 3)
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10 md:py-14">
-      <section className="mb-12 max-w-3xl">
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 leading-[1.1] mb-5">
-          Библиотека сценариев<br />внедрения&nbsp;ИИ
-        </h1>
-        <p className="text-lg text-gray-600 leading-relaxed">
-          Воспроизводимые сценарии применения искусственного интеллекта в компаниях среднего
-          бизнеса. Только реальный опыт — каждая статья описывает то, что мы или наши партнёры
-          действительно внедряли. Подойдёт собственникам, операционным руководителям и командам,
-          которые ищут конкретные паттерны, а не общие слова о трансформации.
+    <div className="max-w-5xl mx-auto px-4 py-14 md:py-20">
+      {/* Hero */}
+      <section className="mb-16 md:mb-20 max-w-3xl">
+        <p className="text-sm font-medium text-gray-500 mb-5 tracking-wide">
+          Библиотека ДИИП · {nArticles(all.length)}
         </p>
+        <h1 className="font-serif text-[2.75rem] leading-[1.05] md:text-6xl font-medium tracking-tight text-gray-900 mb-6">
+          Сценарии внедрения<br />ИИ в бизнес
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+          Воспроизводимые сценарии применения ИИ в компаниях среднего бизнеса.
+          Только реальный опыт — каждая статья описывает то, что мы или партнёры
+          действительно внедряли.
+        </p>
+        <div className="max-w-xl">
+          <SearchBox variant="hero" />
+        </div>
       </section>
 
-      <section className="mb-16">
-        <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
+      {/* Categories */}
+      <section className="mb-20">
+        <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-6">
           По бизнес-процессам
         </h2>
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -35,35 +43,30 @@ export default function HomePage() {
               <li key={category.slug}>
                 <Link
                   href={`/${category.slug}/`}
-                  className={`group relative block h-full p-6 rounded-2xl border border-gray-200 border-l-[3px] ${accent.border} bg-white ${accent.hoverBg} hover:border-gray-300 hover:shadow-sm transition-all`}
+                  className="group relative flex h-full flex-col p-6 rounded-2xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-[0_2px_24px_rgba(0,0,0,0.05)] transition-all"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div
-                      className={`w-11 h-11 rounded-xl flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
-                    >
-                      <CategoryIcon slug={category.slug} className="w-6 h-6" />
-                    </div>
-                    <span
-                      className={`text-xs tabular-nums px-2 py-0.5 rounded-full ${accent.bgSoft} ${accent.text}`}
-                    >
-                      {nArticles(count)}
-                    </span>
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <span className={`w-2.5 h-2.5 rounded-full ${accent.bg}`} aria-hidden />
+                    <span className="text-xs tabular-nums text-gray-400">{nArticles(count)}</span>
                   </div>
-                  <h3 className="font-semibold text-lg text-gray-900 mb-1.5 group-hover:text-black">
+                  <h3 className="font-serif text-xl text-gray-900 mb-2 leading-snug group-hover:text-black">
                     {category.title}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 pr-6">
+                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
                     {category.description}
                   </p>
-                  <svg
-                    aria-hidden
-                    className="absolute bottom-5 right-5 w-4 h-4 text-gray-300 group-hover:text-gray-700 transition-transform group-hover:translate-x-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-gray-900">
+                    Смотреть
+                    <svg
+                      aria-hidden
+                      className="w-4 h-4 text-gray-400 group-hover:text-gray-900 transition-transform group-hover:translate-x-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
                 </Link>
               </li>
             )
@@ -71,19 +74,20 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="mb-16">
-        <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
+      {/* Industries */}
+      <section className="mb-20">
+        <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-6">
           По отраслям
         </h2>
         <IndustryTagCloud />
       </section>
 
       {recent.length > 0 && (
-        <section className="mb-16">
-          <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
+        <section>
+          <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-6">
             Свежие статьи
           </h2>
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             {recent.map((a) => (
               <li key={a.href}>
                 <ArticleCard article={a} />

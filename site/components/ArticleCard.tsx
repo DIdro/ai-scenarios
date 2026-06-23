@@ -11,8 +11,9 @@ export default function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
       href={article.href}
-      className={`group relative flex items-start gap-3 border-l-[3px] ${accent.border} ${accent.hoverBg} hover:shadow-sm transition-all -mx-3 pl-5 pr-3 py-3.5 rounded-r-lg`}
+      className="group relative flex items-start gap-3 border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all px-5 py-4 rounded-xl"
     >
+      <span className={`mt-2 w-2 h-2 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
       <div className="flex-1 min-w-0">
         <h3 className="font-medium text-gray-900 group-hover:text-black mb-1 leading-snug">
           {article.frontmatter.title}
@@ -25,7 +26,7 @@ export default function ArticleCard({ article }: { article: Article }) {
             {article.frontmatter.industries.slice(0, 4).map((ind) => (
               <span
                 key={ind}
-                className={`px-2 py-0.5 text-[11px] rounded-full ${accent.bgSoft} ${accent.text}`}
+                className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 text-gray-600"
               >
                 {INDUSTRIES[ind] ?? ind}
               </span>
