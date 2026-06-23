@@ -17,13 +17,12 @@ export default function HomePage() {
         <p className="text-sm font-medium text-gray-500 mb-5 tracking-wide">
           Библиотека ДИИП · {nArticles(all.length)}
         </p>
-        <h1 className="font-serif text-[2.75rem] leading-[1.05] md:text-6xl font-medium tracking-tight text-gray-900 mb-6">
-          Сценарии внедрения<br />ИИ в бизнес
+        <h1 className="font-serif font-medium text-[2rem] leading-[1.1] sm:text-5xl md:text-6xl tracking-tight text-gray-900 mb-6">
+          Сценарии внедрения ИИ в бизнес
         </h1>
         <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-          Воспроизводимые сценарии применения ИИ в компаниях среднего бизнеса.
-          Только реальный опыт — каждая статья описывает то, что мы или партнёры
-          действительно внедряли.
+          Готовые сценарии применения ИИ в среднем бизнесе. Только реальный
+          опыт: каждая статья — то, что мы или партнёры действительно внедряли.
         </p>
         <div className="max-w-xl">
           <SearchBox variant="hero" />
@@ -49,7 +48,7 @@ export default function HomePage() {
                     <span className={`w-2.5 h-2.5 rounded-full ${accent.bg}`} aria-hidden />
                     <span className="text-xs tabular-nums text-gray-400">{nArticles(count)}</span>
                   </div>
-                  <h3 className="font-serif text-xl text-gray-900 mb-2 leading-snug group-hover:text-black">
+                  <h3 className="font-serif font-medium text-xl text-gray-900 mb-2 leading-snug group-hover:text-black">
                     {category.title}
                   </h3>
                   <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
