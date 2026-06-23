@@ -25,7 +25,7 @@ export default function HomePage() {
 
       <section className="mb-16">
         <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-5">
-          По функциям бизнеса
+          По бизнес-процессам
         </h2>
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {TREE.map((category) => {

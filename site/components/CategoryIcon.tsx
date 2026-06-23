@@ -8,19 +8,17 @@ type Props = {
 
 export default function CategoryIcon({ slug, className = 'w-6 h-6' }: Props) {
   switch (slug) {
-    case 'operations':
+    // A. Стратегия и проектирование — мишень/цель
+    case 'strategy':
       return (
         <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6" />
-          <path
-            d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-          />
+          <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+          <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
+          <circle cx="12" cy="12" r="1" fill="currentColor" />
         </svg>
       )
-    case 'sales':
+    // B. Создание и поставка ценности — поток/стрелка роста
+    case 'value-stream':
       return (
         <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
           <path
@@ -39,29 +37,38 @@ export default function CategoryIcon({ slug, className = 'w-6 h-6' }: Props) {
           />
         </svg>
       )
-    case 'hr':
+    // C. Данные, аналитика и интеллект — столбцы/график
+    case 'data':
       return (
         <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-          <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.6" />
           <path
-            d="M5 20c1.4-3.5 4-5 7-5s5.6 1.5 7 5"
+            d="M5 20V11M12 20V4M19 20v-6"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+        </svg>
+      )
+    // D. Обеспечение — шестерёнка
+    case 'support':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6" />
+          <path
+            d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"
             stroke="currentColor"
             strokeWidth="1.6"
             strokeLinecap="round"
           />
         </svg>
       )
-    case 'products':
+    // E. Управление и контроль — чек-лист
+    case 'management':
       return (
         <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+          <rect x="4" y="3.5" width="16" height="17" rx="2" stroke="currentColor" strokeWidth="1.6" />
           <path
-            d="M12 2.5l8 4.2v8.6l-8 4.2-8-4.2V6.7l8-4.2z"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M4 6.9l8 4.2 8-4.2M12 11.1V20"
+            d="M8 9l2 2 3-3.5M8 15l2 2 3-3.5"
             stroke="currentColor"
             strokeWidth="1.6"
             strokeLinecap="round"
