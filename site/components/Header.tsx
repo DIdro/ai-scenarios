@@ -1,12 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import ProposeModal from './ProposeModal'
 import SearchBox from './SearchBox'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+  // На главной поиск живёт в hero — в шапке его не дублируем.
+  const showSearch = pathname !== '/'
 
   return (
     <>
@@ -19,7 +23,7 @@ export default function Header() {
             Библиотека ДИИП
           </Link>
           <div className="flex items-center gap-3">
-            <SearchBox />
+            {showSearch && <SearchBox />}
             <button
               onClick={() => setOpen(true)}
               className="text-sm px-4 py-1.5 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
