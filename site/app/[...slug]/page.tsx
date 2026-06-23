@@ -24,14 +24,12 @@ type Params = { slug: string[] }
 
 export async function generateStaticParams(): Promise<Params[]> {
   const params: Params[] = []
-  // category pages
   for (const cat of TREE) {
     params.push({ slug: [cat.slug] })
     for (const sub of cat.subcategories) {
       params.push({ slug: [cat.slug, sub.slug] })
     }
   }
-  // article pages
   for (const article of getAllArticles()) {
     params.push({ slug: [article.category, article.subcategory, article.slug] })
   }
@@ -95,26 +93,26 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
     <PageShell activeCategory={categorySlug}>
       <Breadcrumbs items={[{ label: category.title }]} />
 
-      <header className="mb-10 flex items-start gap-4">
+      <header className="mb-12 flex items-start gap-4">
         <div
-          className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
+          className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
         >
           <CategoryIcon slug={category.slug} className="w-6 h-6" />
         </div>
         <div>
-          <div className={`text-xs uppercase tracking-wider font-medium ${accent.text} mb-1`}>
-            Категория
+          <div className="text-xs uppercase tracking-[0.12em] font-medium text-gray-400 mb-1.5">
+            Раздел
           </div>
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-3 leading-tight">
+          <h1 className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight">
             {category.title}
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{category.description}</p>
         </div>
       </header>
 
-      <section className="mb-12">
-        <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-4">
-          Подкатегории
+      <section className="mb-14">
+        <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-4">
+          Подразделы
         </h2>
         <ul className="grid sm:grid-cols-2 gap-3">
           {category.subcategories.map((sub) => {
@@ -123,16 +121,15 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
               <li key={sub.slug}>
                 <a
                   href={`/${category.slug}/${sub.slug}/`}
-                  className={`group relative flex items-start gap-4 h-full p-5 rounded-xl border border-gray-200 border-l-[3px] ${accent.border} bg-white ${accent.hoverBg} hover:shadow-sm transition-all`}
+                  className="group relative flex items-start gap-3.5 h-full p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all"
                 >
+                  <span className={`mt-1.5 w-2.5 h-2.5 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between mb-1.5 gap-3">
                       <h3 className="font-medium text-gray-900 group-hover:text-black">
                         {sub.title}
                       </h3>
-                      <span
-                        className={`text-xs tabular-nums shrink-0 px-2 py-0.5 rounded-full ${accent.bgSoft} ${accent.text}`}
-                      >
+                      <span className="text-xs tabular-nums shrink-0 text-gray-400">
                         {nArticles(count)}
                       </span>
                     </div>
@@ -156,10 +153,10 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
 
       {articles.length > 0 && (
         <section>
-          <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-4">
-            Все статьи в категории
+          <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-4">
+            Все сценарии раздела
           </h2>
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             {articles.map((a) => (
               <li key={a.href}>
                 <ArticleCard article={a} />
@@ -180,7 +177,6 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
   if (!found) notFound()
   const { category, subcategory } = found
   const articles = getArticlesBySubcategory(categorySlug, subSlug)
-  const accent = ACCENT_CLASSES[category.accent] ?? ACCENT_CLASSES.amber
 
   return (
     <PageShell activeCategory={categorySlug} activeSubcategory={subSlug}>
@@ -191,20 +187,20 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
         ]}
       />
 
-      <header className="mb-10">
-        <div className={`text-xs uppercase tracking-wider font-medium ${accent.text} mb-2`}>
+      <header className="mb-12">
+        <div className="text-xs uppercase tracking-[0.12em] font-medium text-gray-400 mb-2">
           {category.title}
         </div>
-        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-3 leading-tight">
+        <h1 className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight">
           {subcategory.title}
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{subcategory.description}</p>
       </header>
 
       {articles.length === 0 ? (
-        <p className="text-gray-500 text-sm">Пока нет статей в этой подкатегории.</p>
+        <p className="text-gray-500 text-sm">Пока нет сценариев в этом разделе.</p>
       ) : (
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {articles.map((a) => (
             <li key={a.href}>
               <ArticleCard article={a} />
@@ -235,7 +231,6 @@ async function ArticleView({
   if (!found) notFound()
   const { category, subcategory } = found
 
-  // Dynamic import of the MDX file
   const { default: MDXContent } = await import(
     `@/content/${categorySlug}/${subSlug}/${articleSlug}.mdx`
   )
@@ -263,11 +258,11 @@ async function ArticleView({
       </article>
 
       {related.length > 0 && (
-        <section className="mt-16 pt-10 border-t border-gray-100">
-          <h2 className="text-xs uppercase tracking-wider text-gray-400 font-medium mb-4">
-            Другие статьи в подкатегории
+        <section className="mt-16 pt-10 border-t border-gray-200/70">
+          <h2 className="text-xs uppercase tracking-[0.12em] text-gray-400 font-medium mb-4">
+            Другие сценарии раздела
           </h2>
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             {related.map((a) => (
               <li key={a.href}>
                 <ArticleCard article={a} />
@@ -293,7 +288,7 @@ function PageShell({
   activeSubcategory?: string
 }) {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-12">
         <aside className="hidden lg:block sticky top-20 self-start">
           <CategoryTree activeCategory={activeCategory} activeSubcategory={activeSubcategory} />
