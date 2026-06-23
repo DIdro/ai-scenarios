@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-export default function SearchBox() {
+export default function SearchBox({ variant = 'header' }: { variant?: 'header' | 'hero' }) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [isMac, setIsMac] = useState(false)
@@ -97,17 +97,33 @@ export default function SearchBox() {
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 border border-gray-200 rounded-full flex items-center gap-2 transition-colors"
-      >
-        <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-          <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-        <span>Поиск</span>
-        <kbd className="text-xs text-gray-400 hidden md:inline">{isMac ? '⌘K' : 'Ctrl+K'}</kbd>
-      </button>
+      {variant === 'hero' ? (
+        <button
+          onClick={() => setOpen(true)}
+          className="group w-full flex items-center gap-3 px-5 py-4 bg-white border border-gray-200 rounded-2xl text-left shadow-sm hover:border-gray-300 hover:shadow-md transition-all"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-gray-400">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <span className="text-base text-gray-500">Искать сценарий — процесс, боль, инструмент…</span>
+          <kbd className="ml-auto text-xs text-gray-400 border border-gray-200 rounded px-1.5 py-0.5 hidden md:inline">
+            {isMac ? '⌘K' : 'Ctrl K'}
+          </kbd>
+        </button>
+      ) : (
+        <button
+          onClick={() => setOpen(true)}
+          className="text-sm text-gray-500 hover:text-gray-900 px-3 py-1.5 border border-gray-200 rounded-full flex items-center gap-2 transition-colors"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <span>Поиск</span>
+          <kbd className="text-xs text-gray-400 hidden md:inline">{isMac ? '⌘K' : 'Ctrl+K'}</kbd>
+        </button>
+      )}
 
       {open && (
         <div
