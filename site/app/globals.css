@@ -23,3 +23,95 @@ body {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ───────────────────────────────────────────────────────
+   Hero: переливающееся свечение за заголовком
+   ─────────────────────────────────────────────────────── */
+.hero-aura {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-aura::before,
+.hero-aura::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  will-change: transform, opacity;
+}
+.hero-aura::before {
+  width: 460px;
+  height: 460px;
+  left: 4%;
+  top: -120px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.30), transparent 68%);
+}
+.hero-aura::after {
+  width: 420px;
+  height: 420px;
+  right: 2%;
+  top: -40px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.24), transparent 68%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aura::before {
+    animation: auraDriftA 18s ease-in-out infinite;
+  }
+  .hero-aura::after {
+    animation: auraDriftB 23s ease-in-out infinite;
+  }
+  .hero-caret {
+    animation: caretBlink 1.05s step-end infinite;
+  }
+}
+
+@keyframes auraDriftA {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate(9%, 7%) scale(1.18);
+    opacity: 1;
+  }
+}
+@keyframes auraDriftB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.06);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(-8%, -6%) scale(1);
+    opacity: 0.9;
+  }
+}
+
+.hero-caret {
+  display: inline-block;
+  margin-left: 0.04em;
+  color: #6366f1;
+  font-weight: 400;
+}
+.hero-caret--done {
+  animation: caretFade 0.5s ease forwards 0.4s;
+}
+@keyframes caretBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes caretFade {
+  to {
+    opacity: 0;
+  }
+}
