@@ -15,10 +15,10 @@ export default function Header() {
   return (
     <>
       <header className="border-b border-gray-100 bg-white sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="font-semibold text-sm tracking-tight text-black hover:opacity-70 transition-opacity shrink-0"
+            className="font-serif font-medium text-xl md:text-2xl tracking-tight text-gray-900 hover:opacity-70 transition-opacity shrink-0"
           >
             Библиотека ДИИП
           </Link>
