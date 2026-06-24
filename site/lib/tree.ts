@@ -14,7 +14,7 @@ export type CategoryMeta = {
   slug: string
   title: string
   description: string
-  accent: string // Tailwind color name (для левой полоски, hover, hero)
+  accent: string
   subcategories: SubcategoryMeta[]
 }
 
@@ -128,6 +128,7 @@ export const INDUSTRIES: Record<string, string> = {
 
 // Цветовые классы Tailwind для каждого accent — нужны как литералы,
 // иначе Tailwind v4 не включит их в билд.
+// tint — насыщенный градиент (белый текст читаем); glow / glowSoft — цветное свечение.
 export const ACCENT_CLASSES: Record<
   string,
   {
@@ -140,6 +141,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: string
     iconBg: string
     iconText: string
+    tint: string
+    glow: string
+    glowSoft: string
   }
 > = {
   indigo: {
@@ -152,6 +156,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-indigo-50',
     iconBg: 'bg-indigo-100',
     iconText: 'text-indigo-700',
+    tint: 'bg-gradient-to-br from-indigo-600 to-indigo-800',
+    glow: 'shadow-[0_18px_50px_-12px_rgba(99,102,241,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(99,102,241,0.7)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(99,102,241,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(99,102,241,0.55)]',
   },
   sky: {
     border: 'border-l-sky-400',
@@ -163,6 +170,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-sky-50',
     iconBg: 'bg-sky-100',
     iconText: 'text-sky-700',
+    tint: 'bg-gradient-to-br from-sky-600 to-sky-800',
+    glow: 'shadow-[0_18px_50px_-12px_rgba(14,165,233,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(14,165,233,0.7)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(14,165,233,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(14,165,233,0.55)]',
   },
   emerald: {
     border: 'border-l-emerald-400',
@@ -174,6 +184,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-emerald-50',
     iconBg: 'bg-emerald-100',
     iconText: 'text-emerald-700',
+    tint: 'bg-gradient-to-br from-emerald-700 to-emerald-900',
+    glow: 'shadow-[0_18px_50px_-12px_rgba(16,185,129,0.50)] hover:shadow-[0_26px_64px_-10px_rgba(16,185,129,0.65)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(16,185,129,0.38)] hover:shadow-[0_18px_44px_-12px_rgba(16,185,129,0.52)]',
   },
   violet: {
     border: 'border-l-violet-400',
@@ -185,6 +198,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-violet-50',
     iconBg: 'bg-violet-100',
     iconText: 'text-violet-700',
+    tint: 'bg-gradient-to-br from-violet-600 to-violet-800',
+    glow: 'shadow-[0_18px_50px_-12px_rgba(139,92,246,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(139,92,246,0.7)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(139,92,246,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(139,92,246,0.55)]',
   },
   amber: {
     border: 'border-l-amber-400',
@@ -196,6 +212,9 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-amber-50',
     iconBg: 'bg-amber-100',
     iconText: 'text-amber-700',
+    tint: 'bg-gradient-to-br from-amber-700 to-amber-900',
+    glow: 'shadow-[0_18px_50px_-12px_rgba(245,158,11,0.50)] hover:shadow-[0_26px_64px_-10px_rgba(245,158,11,0.65)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(245,158,11,0.38)] hover:shadow-[0_18px_44px_-12px_rgba(245,158,11,0.52)]',
   },
 }
 

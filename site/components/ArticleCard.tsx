@@ -11,7 +11,7 @@ export default function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
       href={article.href}
-      className="group relative flex items-start gap-3 border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all px-5 py-4 rounded-xl"
+      className={`group relative flex items-start gap-3 border border-gray-200/80 bg-white ${accent.glowSoft} hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-300 px-5 py-4 rounded-xl`}
     >
       <span className={`mt-2 w-2 h-2 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
       <div className="flex-1 min-w-0">
