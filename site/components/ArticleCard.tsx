@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import type { Article } from '@/lib/content'
-import { getCategory, INDUSTRIES, ACCENT_CLASSES } from '@/lib/tree'
+import { getSubsystem, INDUSTRIES, ACCENT_CLASSES } from '@/lib/tree'
 
 export default function ArticleCard({ article }: { article: Article }) {
-  const category = getCategory(article.category)
-  const accent = category
-    ? ACCENT_CLASSES[category.accent] ?? ACCENT_CLASSES.amber
+  const subsystem = getSubsystem(article.subsystem)
+  const accent = subsystem
+    ? ACCENT_CLASSES[subsystem.accent] ?? ACCENT_CLASSES.amber
     : ACCENT_CLASSES.amber
 
   return (
