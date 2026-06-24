@@ -14,7 +14,9 @@ export default function Header() {
 
   return (
     <>
-      <header className="border-b border-gray-100 bg-white sticky top-0 z-40">
+      {/* Liquid glass: полупрозрачный матовый фон + верхний блик + мягкая тень.
+          Запасной непрозрачный фон, если backdrop-filter не поддерживается. */}
+      <header className="sticky top-0 z-40 border-b border-white/40 bg-white/80 supports-[backdrop-filter]:bg-white/55 backdrop-blur-lg backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.7),0_6px_24px_-14px_rgba(0,0,0,0.18)]">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link
             href="/"
