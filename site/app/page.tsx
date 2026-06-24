@@ -48,23 +48,23 @@ export default function HomePage() {
                 <Reveal delay={i * 60} className="h-full">
                   <Link
                     href={`/${category.slug}/`}
-                    className={`group relative flex h-full flex-col p-6 rounded-2xl ${accent.tint} ${accent.glow} hover:-translate-y-1 transition-all duration-300`}
+                    className={`group relative flex h-full flex-col p-6 rounded-2xl border ${accent.cardBorder} ${accent.tint} ${accent.glowSoft} hover:-translate-y-1 transition-all duration-300`}
                   >
                     <div className="flex items-center gap-2.5 mb-4">
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/80" aria-hidden />
-                      <span className="text-xs tabular-nums text-white/75">{nArticles(count)}</span>
+                      <span className={`w-2.5 h-2.5 rounded-full ${accent.bg}`} aria-hidden />
+                      <span className="text-xs tabular-nums text-gray-500">{nArticles(count)}</span>
                     </div>
-                    <h3 className="font-serif font-medium text-xl text-white mb-2 leading-snug">
+                    <h3 className={`font-serif font-medium text-xl ${accent.textStrong} mb-2 leading-snug`}>
                       {category.title}
                     </h3>
-                    <p className="text-sm text-white/90 leading-relaxed line-clamp-3">
+                    <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
                       {category.description}
                     </p>
-                    <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-white">
+                    <span className={`mt-5 inline-flex items-center gap-1 text-sm font-medium ${accent.text}`}>
                       Смотреть
                       <svg
                         aria-hidden
-                        className="w-4 h-4 text-white/80 transition-transform group-hover:translate-x-0.5"
+                        className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

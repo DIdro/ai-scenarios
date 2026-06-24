@@ -97,7 +97,7 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
 
       <header className="mb-12 flex items-start gap-4">
         <div
-          className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-white ${accent.tint} ${accent.glowSoft}`}
+          className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${accent.iconBg} ${accent.iconText}`}
         >
           <CategoryIcon slug={category.slug} className="w-6 h-6" />
         </div>
@@ -125,21 +125,21 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
                 <Reveal delay={i * 60} className="h-full">
                   <a
                     href={`/${category.slug}/${sub.slug}/`}
-                    className={`group relative flex items-start gap-3.5 h-full p-5 rounded-xl ${accent.tint} ${accent.glow} hover:-translate-y-1 transition-all duration-300`}
+                    className={`group relative flex items-start gap-3.5 h-full p-5 rounded-xl border ${accent.cardBorder} ${accent.tint} ${accent.glowSoft} hover:-translate-y-1 transition-all duration-300`}
                   >
-                    <span className="mt-1.5 w-2.5 h-2.5 shrink-0 rounded-full bg-white/80" aria-hidden />
+                    <span className={`mt-1.5 w-2.5 h-2.5 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between mb-1.5 gap-3">
-                        <h3 className="font-medium text-white">{sub.title}</h3>
-                        <span className="text-xs tabular-nums shrink-0 text-white/75">
+                        <h3 className={`font-medium ${accent.textStrong}`}>{sub.title}</h3>
+                        <span className="text-xs tabular-nums shrink-0 text-gray-500">
                           {nArticles(count)}
                         </span>
                       </div>
-                      <p className="text-sm text-white/90 leading-relaxed">{sub.description}</p>
+                      <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
                     </div>
                     <svg
                       aria-hidden
-                      className="shrink-0 self-center w-4 h-4 text-white/70 transition-transform group-hover:translate-x-0.5"
+                      className={`shrink-0 self-center w-4 h-4 ${accent.text} transition-transform group-hover:translate-x-0.5`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
