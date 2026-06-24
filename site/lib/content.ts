@@ -2,9 +2,36 @@ import 'server-only'
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
-import { TREE, getCategory, getSubcategory, type CategoryMeta, type SubcategoryMeta } from './tree'
+import {
+  TREE,
+  getSubsystem,
+  getProcess,
+  getSubprocess,
+  type SubsystemMeta,
+  type ProcessMeta,
+  type SubprocessMeta,
+} from './tree'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
+
+// Привязка физических файлов content/<subsystem>/<folder>/<slug>.mdx к каноническим
+// (process, subprocess). Ключ: "<subsystem>/<folder>/<slug>". Файлы НЕ двигаем.
+const NODE_MAP: Record<string, { process: string; subprocess: string }> = {
+  'strategy/market-analysis/competitor-monitoring': { process: 'strategic-planning', subprocess: 'market-analysis' },
+  'strategy/process-design/bpmn-from-audio': { process: 'processes-org', subprocess: 'process-design' },
+  'value-stream/sales/tender-analysis': { process: 'sales', subprocess: 'offers-contracts' },
+  'value-stream/client-service/client-calculator-bot': { process: 'client-service', subprocess: 'support-requests' },
+  'data/analytics/manager-assistant': { process: 'analytics', subprocess: 'dashboards' },
+  'data/ai-knowledge/rag-knowledge-search': { process: 'ai-platform', subprocess: 'ai-knowledge-base' },
+  'data/ai-knowledge/tech-docs-chatbot': { process: 'ai-platform', subprocess: 'ai-knowledge-base' },
+  'support/hr/resume-normalization': { process: 'hr', subprocess: 'recruiting' },
+  'support/hr/onboarding-bot': { process: 'hr', subprocess: 'onboarding-training' },
+  'support/hr/idp-generation': { process: 'hr', subprocess: 'performance' },
+  'management/operations/ai-meeting-secretary': { process: 'operations', subprocess: 'coordination' },
+  'management/operations/deadline-planning': { process: 'operations', subprocess: 'coordination' },
+  'management/operations/protocol-extraction': { process: 'operations', subprocess: 'coordination' },
+  'management/quality/call-speech-analytics': { process: 'quality', subprocess: 'quality-control' },
+}
 
 export type ArticleFrontmatter = {
   title: string
@@ -17,10 +44,12 @@ export type ArticleFrontmatter = {
 }
 
 export type Article = {
-  slug: string // file basename without extension
-  category: string // category slug
-  subcategory: string // subcategory slug
-  href: string // /operations/meetings/protocol-extraction/
+  slug: string
+  subsystem: string
+  process: string
+  subprocess: string
+  physicalFolder: string // средний каталог content/<subsystem>/<physicalFolder>/
+  href: string
   frontmatter: ArticleFrontmatter
 }
 
@@ -35,31 +64,37 @@ function readAllArticles(): Article[] {
     return cache
   }
 
-  for (const category of fs.readdirSync(CONTENT_DIR)) {
-    const categoryDir = path.join(CONTENT_DIR, category)
-    if (!fs.statSync(categoryDir).isDirectory()) continue
+  for (const subsystem of fs.readdirSync(CONTENT_DIR)) {
+    const subsystemDir = path.join(CONTENT_DIR, subsystem)
+    if (!fs.statSync(subsystemDir).isDirectory()) continue
 
-    for (const subcategory of fs.readdirSync(categoryDir)) {
-      const subcategoryDir = path.join(categoryDir, subcategory)
-      if (!fs.statSync(subcategoryDir).isDirectory()) continue
+    for (const folder of fs.readdirSync(subsystemDir)) {
+      const folderDir = path.join(subsystemDir, folder)
+      if (!fs.statSync(folderDir).isDirectory()) continue
 
-      for (const file of fs.readdirSync(subcategoryDir)) {
+      for (const file of fs.readdirSync(folderDir)) {
         if (!file.endsWith('.mdx')) continue
         const slug = file.replace(/\.mdx$/, '')
-        const filePath = path.join(subcategoryDir, file)
-        const raw = fs.readFileSync(filePath, 'utf-8')
+        const raw = fs.readFileSync(path.join(folderDir, file), 'utf-8')
         const { data } = matter(raw)
         const fm = data as Record<string, unknown>
-        // gray-matter parses ISO dates as Date objects — normalize to string
         const publishedAt =
           fm.publishedAt instanceof Date
             ? fm.publishedAt.toISOString().slice(0, 10)
             : (fm.publishedAt as string | undefined) ?? ''
+
+        const node = NODE_MAP[`${subsystem}/${folder}/${slug}`] ?? {
+          process: folder,
+          subprocess: folder,
+        }
+
         articles.push({
           slug,
-          category,
-          subcategory,
-          href: `/${category}/${subcategory}/${slug}/`,
+          subsystem,
+          process: node.process,
+          subprocess: node.subprocess,
+          physicalFolder: folder,
+          href: `/${subsystem}/${node.process}/${node.subprocess}/${slug}/`,
           frontmatter: {
             title: (fm.title as string) ?? slug,
             description: (fm.description as string) ?? '',
@@ -74,8 +109,9 @@ function readAllArticles(): Article[] {
     }
   }
 
-  // sort newest first
-  articles.sort((a, b) => (b.frontmatter.publishedAt ?? '').localeCompare(a.frontmatter.publishedAt ?? ''))
+  articles.sort((a, b) =>
+    (b.frontmatter.publishedAt ?? '').localeCompare(a.frontmatter.publishedAt ?? ''),
+  )
   cache = articles
   return cache
 }
@@ -84,21 +120,40 @@ export function getAllArticles(): Article[] {
   return readAllArticles()
 }
 
-export function getArticlesByCategory(categorySlug: string): Article[] {
-  return readAllArticles().filter((a) => a.category === categorySlug)
+export function getArticlesBySubsystem(subsystem: string): Article[] {
+  return readAllArticles().filter((a) => a.subsystem === subsystem)
 }
 
-export function getArticlesBySubcategory(categorySlug: string, subSlug: string): Article[] {
-  return readAllArticles().filter((a) => a.category === categorySlug && a.subcategory === subSlug)
+export function getArticlesByProcess(subsystem: string, process: string): Article[] {
+  return readAllArticles().filter((a) => a.subsystem === subsystem && a.process === process)
+}
+
+export function getArticlesBySubprocess(
+  subsystem: string,
+  process: string,
+  subprocess: string,
+): Article[] {
+  return readAllArticles().filter(
+    (a) => a.subsystem === subsystem && a.process === process && a.subprocess === subprocess,
+  )
 }
 
 export function getArticlesByIndustry(industry: string): Article[] {
   return readAllArticles().filter((a) => a.frontmatter.industries.includes(industry))
 }
 
-export function getArticle(category: string, subcategory: string, slug: string): Article | undefined {
+export function getArticle(
+  subsystem: string,
+  process: string,
+  subprocess: string,
+  slug: string,
+): Article | undefined {
   return readAllArticles().find(
-    (a) => a.category === category && a.subcategory === subcategory && a.slug === slug,
+    (a) =>
+      a.subsystem === subsystem &&
+      a.process === process &&
+      a.subprocess === subprocess &&
+      a.slug === slug,
   )
 }
 
@@ -114,13 +169,21 @@ export function getAllIndustries(): { slug: string; count: number }[] {
     .sort((a, b) => b.count - a.count)
 }
 
-export function countArticlesInSubcategory(category: string, sub: string): number {
-  return getArticlesBySubcategory(category, sub).length
+export function countArticlesInSubsystem(subsystem: string): number {
+  return getArticlesBySubsystem(subsystem).length
 }
 
-export function countArticlesInCategory(category: string): number {
-  return getArticlesByCategory(category).length
+export function countArticlesInProcess(subsystem: string, process: string): number {
+  return getArticlesByProcess(subsystem, process).length
 }
 
-export { TREE, getCategory, getSubcategory }
-export type { CategoryMeta, SubcategoryMeta }
+export function countArticlesInSubprocess(
+  subsystem: string,
+  process: string,
+  subprocess: string,
+): number {
+  return getArticlesBySubprocess(subsystem, process, subprocess).length
+}
+
+export { TREE, getSubsystem, getProcess, getSubprocess }
+export type { SubsystemMeta, ProcessMeta, SubprocessMeta }
