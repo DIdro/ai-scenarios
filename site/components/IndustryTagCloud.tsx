@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllIndustries } from '@/lib/content'
 import { INDUSTRIES } from '@/lib/tree'
+import IndustryIcon from './IndustryIcon'
 
 export default function IndustryTagCloud() {
   const industries = getAllIndustries()
@@ -14,6 +15,10 @@ export default function IndustryTagCloud() {
             href={`/industries/${slug}/`}
             className="group inline-flex items-center gap-2.5 rounded-full border border-gray-200 bg-white/70 px-5 py-3 text-base text-gray-700 hover:border-gray-300 hover:bg-white hover:text-gray-900 transition-colors"
           >
+            <IndustryIcon
+              slug={slug}
+              className="w-5 h-5 shrink-0 text-gray-400 group-hover:text-gray-600 transition-colors"
+            />
             <span className="font-medium">{INDUSTRIES[slug] ?? slug}</span>
             <span className="tabular-nums text-sm text-gray-400 group-hover:text-gray-500">
               {count}
