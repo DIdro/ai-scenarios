@@ -54,7 +54,7 @@ export const TREE: CategoryMeta[] = [
       {
         slug: 'client-service',
         title: 'Сервис и работа с клиентами',
-        description: 'Клиентские ИИ-сервисы, расчёты и ответы 24/7.',
+        description: 'Клиентские ИИ-сервисы, расчёты и отвȱеты 24/7.',
       },
     ],
   },
@@ -128,7 +128,8 @@ export const INDUSTRIES: Record<string, string> = {
 
 // Цветовые классы Tailwind для каждого accent — нужны как литералы,
 // иначе Tailwind v4 не включит их в билд.
-// tint — двухцветный градиент (белый текст читаем); glow / glowSoft — цветное свечение.
+// tint — мягкий пастельный двухцветный градиент (тёмный текст); cardBorder — тонкая кромка.
+// glow / glowSoft — цветное свечение.
 export const ACCENT_CLASSES: Record<
   string,
   {
@@ -142,6 +143,7 @@ export const ACCENT_CLASSES: Record<
     iconBg: string
     iconText: string
     tint: string
+    cardBorder: string
     glow: string
     glowSoft: string
   }
@@ -156,9 +158,10 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-indigo-50',
     iconBg: 'bg-indigo-100',
     iconText: 'text-indigo-700',
-    tint: 'bg-gradient-to-br from-indigo-600 to-violet-700',
+    tint: 'bg-gradient-to-br from-indigo-50 to-violet-100',
+    cardBorder: 'border-indigo-200/70',
     glow: 'shadow-[0_18px_50px_-12px_rgba(99,102,241,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(99,102,241,0.7)]',
-    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(99,102,241,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(99,102,241,0.55)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(99,102,241,0.35)] hover:shadow-[0_18px_44px_-12px_rgba(99,102,241,0.45)]',
   },
   sky: {
     border: 'border-l-sky-400',
@@ -170,9 +173,10 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-sky-50',
     iconBg: 'bg-sky-100',
     iconText: 'text-sky-700',
-    tint: 'bg-gradient-to-br from-blue-600 to-cyan-700',
+    tint: 'bg-gradient-to-br from-sky-50 to-cyan-100',
+    cardBorder: 'border-sky-200/70',
     glow: 'shadow-[0_18px_50px_-12px_rgba(14,165,233,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(14,165,233,0.7)]',
-    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(14,165,233,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(14,165,233,0.55)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(14,165,233,0.35)] hover:shadow-[0_18px_44px_-12px_rgba(14,165,233,0.45)]',
   },
   emerald: {
     border: 'border-l-emerald-400',
@@ -184,9 +188,10 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-emerald-50',
     iconBg: 'bg-emerald-100',
     iconText: 'text-emerald-700',
-    tint: 'bg-gradient-to-br from-teal-700 to-emerald-800',
+    tint: 'bg-gradient-to-br from-teal-50 to-emerald-100',
+    cardBorder: 'border-emerald-200/70',
     glow: 'shadow-[0_18px_50px_-12px_rgba(16,185,129,0.50)] hover:shadow-[0_26px_64px_-10px_rgba(16,185,129,0.65)]',
-    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(16,185,129,0.38)] hover:shadow-[0_18px_44px_-12px_rgba(16,185,129,0.52)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(16,185,129,0.32)] hover:shadow-[0_18px_44px_-12px_rgba(16,185,129,0.42)]',
   },
   violet: {
     border: 'border-l-violet-400',
@@ -198,9 +203,10 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-violet-50',
     iconBg: 'bg-violet-100',
     iconText: 'text-violet-700',
-    tint: 'bg-gradient-to-br from-violet-600 to-fuchsia-700',
+    tint: 'bg-gradient-to-br from-violet-50 to-fuchsia-100',
+    cardBorder: 'border-violet-200/70',
     glow: 'shadow-[0_18px_50px_-12px_rgba(139,92,246,0.55)] hover:shadow-[0_26px_64px_-10px_rgba(139,92,246,0.7)]',
-    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(139,92,246,0.40)] hover:shadow-[0_18px_44px_-12px_rgba(139,92,246,0.55)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(139,92,246,0.35)] hover:shadow-[0_18px_44px_-12px_rgba(139,92,246,0.45)]',
   },
   amber: {
     border: 'border-l-amber-400',
@@ -212,9 +218,10 @@ export const ACCENT_CLASSES: Record<
     hoverBg: 'hover:bg-amber-50',
     iconBg: 'bg-amber-100',
     iconText: 'text-amber-700',
-    tint: 'bg-gradient-to-br from-amber-700 to-orange-800',
+    tint: 'bg-gradient-to-br from-amber-50 to-orange-100',
+    cardBorder: 'border-amber-200/70',
     glow: 'shadow-[0_18px_50px_-12px_rgba(245,158,11,0.50)] hover:shadow-[0_26px_64px_-10px_rgba(245,158,11,0.65)]',
-    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(245,158,11,0.38)] hover:shadow-[0_18px_44px_-12px_rgba(245,158,11,0.52)]',
+    glowSoft: 'shadow-[0_10px_30px_-14px_rgba(245,158,11,0.32)] hover:shadow-[0_18px_44px_-12px_rgba(245,158,11,0.42)]',
   },
 }
 
