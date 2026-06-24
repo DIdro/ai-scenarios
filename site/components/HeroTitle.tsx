@@ -25,7 +25,7 @@ export default function HeroTitle({ text, className = '' }: { text: string; clas
         clearInterval(id)
         setDone(true)
       }
-    }, 42)
+    }, 30)
     return () => clearInterval(id)
   }, [text])
 
