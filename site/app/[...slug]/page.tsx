@@ -16,6 +16,8 @@ import ArticleCard from '@/components/ArticleCard'
 import ArticleHeader from '@/components/ArticleHeader'
 import ArticleByline from '@/components/ArticleByline'
 import CategoryIcon from '@/components/CategoryIcon'
+import HeroTitle from '@/components/HeroTitle'
+import Reveal from '@/components/Reveal'
 import { nArticles } from '@/lib/pluralize'
 
 export const dynamicParams = false
@@ -103,9 +105,10 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
           <div className="text-xs uppercase tracking-[0.12em] font-medium text-gray-400 mb-1.5">
             Раздел
           </div>
-          <h1 className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight">
-            {category.title}
-          </h1>
+          <HeroTitle
+            text={category.title}
+            className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight"
+          />
           <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{category.description}</p>
         </div>
       </header>
@@ -115,36 +118,38 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
           Подразделы
         </h2>
         <ul className="grid sm:grid-cols-2 gap-3">
-          {category.subcategories.map((sub) => {
+          {category.subcategories.map((sub, i) => {
             const count = articles.filter((a) => a.subcategory === sub.slug).length
             return (
               <li key={sub.slug}>
-                <a
-                  href={`/${category.slug}/${sub.slug}/`}
-                  className="group relative flex items-start gap-3.5 h-full p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all"
-                >
-                  <span className={`mt-1.5 w-2.5 h-2.5 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between mb-1.5 gap-3">
-                      <h3 className="font-medium text-gray-900 group-hover:text-black">
-                        {sub.title}
-                      </h3>
-                      <span className="text-xs tabular-nums shrink-0 text-gray-400">
-                        {nArticles(count)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
-                  </div>
-                  <svg
-                    aria-hidden
-                    className="shrink-0 self-center w-4 h-4 text-gray-300 group-hover:text-gray-700 transition-transform group-hover:translate-x-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <Reveal delay={i * 60} className="h-full">
+                  <a
+                    href={`/${category.slug}/${sub.slug}/`}
+                    className="group relative flex items-start gap-3.5 h-full p-5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
+                    <span className={`mt-1.5 w-2.5 h-2.5 shrink-0 rounded-full ${accent.bg}`} aria-hidden />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline justify-between mb-1.5 gap-3">
+                        <h3 className="font-medium text-gray-900 group-hover:text-black">
+                          {sub.title}
+                        </h3>
+                        <span className="text-xs tabular-nums shrink-0 text-gray-400">
+                          {nArticles(count)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">{sub.description}</p>
+                    </div>
+                    <svg
+                      aria-hidden
+                      className="shrink-0 self-center w-4 h-4 text-gray-300 group-hover:text-gray-700 transition-transform group-hover:translate-x-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </Reveal>
               </li>
             )
           })}
@@ -157,9 +162,11 @@ function CategoryView({ categorySlug }: { categorySlug: string }) {
             Все сценарии раздела
           </h2>
           <ul className="space-y-2">
-            {articles.map((a) => (
+            {articles.map((a, i) => (
               <li key={a.href}>
-                <ArticleCard article={a} />
+                <Reveal delay={i * 60}>
+                  <ArticleCard article={a} />
+                </Reveal>
               </li>
             ))}
           </ul>
@@ -191,9 +198,10 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
         <div className="text-xs uppercase tracking-[0.12em] font-medium text-gray-400 mb-2">
           {category.title}
         </div>
-        <h1 className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight">
-          {subcategory.title}
-        </h1>
+        <HeroTitle
+          text={subcategory.title}
+          className="font-serif font-medium text-3xl md:text-4xl tracking-tight text-gray-900 mb-3 leading-tight"
+        />
         <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">{subcategory.description}</p>
       </header>
 
@@ -201,9 +209,11 @@ function SubcategoryView({ categorySlug, subSlug }: { categorySlug: string; subS
         <p className="text-gray-500 text-sm">Пока нет сценариев в этом разделе.</p>
       ) : (
         <ul className="space-y-2">
-          {articles.map((a) => (
+          {articles.map((a, i) => (
             <li key={a.href}>
-              <ArticleCard article={a} />
+              <Reveal delay={i * 60}>
+                <ArticleCard article={a} />
+              </Reveal>
             </li>
           ))}
         </ul>
@@ -263,9 +273,11 @@ async function ArticleView({
             Другие сценарии раздела
           </h2>
           <ul className="space-y-2">
-            {related.map((a) => (
+            {related.map((a, i) => (
               <li key={a.href}>
-                <ArticleCard article={a} />
+                <Reveal delay={i * 60}>
+                  <ArticleCard article={a} />
+                </Reveal>
               </li>
             ))}
           </ul>
