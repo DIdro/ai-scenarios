@@ -20,6 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${inter.variable} ${lora.variable}`}>
       <body className="font-sans text-gray-900 antialiased">
+        {/* Глобальное переливающееся свечение за всем контентом */}
+        <div className="site-aura" aria-hidden="true">
+          <span />
+        </div>
         <Header />
         {children}
         <footer className="border-t border-gray-200/70 mt-24 py-10">

@@ -14,23 +14,20 @@ export default function HomePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-14 md:py-20">
       {/* Hero */}
-      <section className="relative mb-16 md:mb-20">
-        <div className="hero-aura" aria-hidden="true" />
-        <div className="relative z-10 max-w-3xl">
-          <p className="text-sm font-medium text-gray-500 mb-5 tracking-wide">
-            Библиотека ДИИП · {nArticles(all.length)}
-          </p>
-          <HeroTitle
-            text="Сценарии внедрения ИИ в бизнес"
-            className="font-serif font-medium text-[2rem] leading-[1.1] sm:text-5xl md:text-6xl tracking-tight text-gray-900 mb-6"
-          />
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-            Готовые сценарии применения ИИ в среднем бизнесе. Только реальный
-            опыт: каждая статья — то, что мы или партнёры действительно внедряли.
-          </p>
-          <div className="max-w-xl">
-            <SearchBox variant="hero" />
-          </div>
+      <section className="mb-16 md:mb-20 max-w-3xl">
+        <p className="text-sm font-medium text-gray-500 mb-5 tracking-wide">
+          Библиотека ДИИП · {nArticles(all.length)}
+        </p>
+        <HeroTitle
+          text="Сценарии внедрения ИИ в бизнес"
+          className="font-serif font-medium text-[2rem] leading-[1.1] sm:text-5xl md:text-6xl tracking-tight text-gray-900 mb-6"
+        />
+        <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+          Готовые сценарии применения ИИ в среднем бизнесе. Только реальный
+          опыт: каждая статья — то, что мы или партнёры действительно внедряли.
+        </p>
+        <div className="max-w-xl">
+          <SearchBox variant="hero" />
         </div>
       </section>
 
