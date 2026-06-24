@@ -26,6 +26,8 @@ body {
 
 /* ───────────────────────────────────────────────────────
    Переливающееся свечение на весь сайт (фоновый fixed-слой)
+   Без filter:blur — мягкость даёт сам радиальный градиент. Анимируются
+   только transform/opacity (композитор, без перерисовки при скролле).
    ─────────────────────────────────────────────────────── */
 .site-aura {
   position: fixed;
@@ -41,35 +43,34 @@ body {
   position: absolute;
   display: block;
   border-radius: 9999px;
-  filter: blur(90px);
   will-change: transform, opacity;
 }
 .site-aura::before {
-  width: 46vw;
-  height: 46vw;
-  max-width: 640px;
-  max-height: 640px;
-  left: -6%;
-  top: -8%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.22), transparent 70%);
+  width: 64vw;
+  height: 64vw;
+  max-width: 860px;
+  max-height: 860px;
+  left: -12%;
+  top: -16%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.20) 0%, transparent 66%);
 }
 .site-aura::after {
-  width: 42vw;
-  height: 42vw;
-  max-width: 600px;
-  max-height: 600px;
-  right: -6%;
-  top: 2%;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.18), transparent 70%);
+  width: 58vw;
+  height: 58vw;
+  max-width: 800px;
+  max-height: 800px;
+  right: -12%;
+  top: -4%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.17) 0%, transparent 66%);
 }
 .site-aura > span {
-  width: 44vw;
-  height: 44vw;
-  max-width: 620px;
-  max-height: 620px;
-  left: 32%;
-  bottom: -20%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.13), transparent 70%);
+  width: 60vw;
+  height: 60vw;
+  max-width: 820px;
+  max-height: 820px;
+  left: 28%;
+  bottom: -26%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 66%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -90,33 +91,33 @@ body {
 @keyframes auraDriftA {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.6;
   }
   50% {
-    transform: translate(8%, 6%) scale(1.18);
+    transform: translate3d(8%, 6%, 0) scale(1.18);
     opacity: 0.95;
   }
 }
 @keyframes auraDriftB {
   0%,
   100% {
-    transform: translate(0, 0) scale(1.05);
+    transform: translate3d(0, 0, 0) scale(1.05);
     opacity: 0.5;
   }
   50% {
-    transform: translate(-8%, 5%) scale(1);
+    transform: translate3d(-8%, 5%, 0) scale(1);
     opacity: 0.85;
   }
 }
 @keyframes auraDriftC {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.4;
   }
   50% {
-    transform: translate(6%, -8%) scale(1.2);
+    transform: translate3d(6%, -8%, 0) scale(1.2);
     opacity: 0.75;
   }
 }
