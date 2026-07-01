@@ -14,8 +14,11 @@ import {
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
 
-// Привязка физических файлов content/<subsystem>/<folder>/<slug>.mdx к каноническим
-// (process, subprocess). Ключ: "<subsystem>/<folder>/<slug>". Файлы НЕ двигаем.
+// Каноническая привязка статьи (process, subprocess) — по приоритету:
+//   1. поля frontmatter `process` / `subprocess` — главный способ для новых статей
+//      (добавить статью = один MDX-файл, без правки кода);
+//   2. NODE_MAP ниже — легаси для старых файлов в папках не по процессу;
+//   3. имя папки (fallback).
 const NODE_MAP: Record<string, { process: string; subprocess: string }> = {
   'strategy/market-analysis/competitor-monitoring': { process: 'strategic-planning', subprocess: 'market-analysis' },
   'strategy/process-design/bpmn-from-audio': { process: 'processes-org', subprocess: 'process-design' },
@@ -48,7 +51,7 @@ export type Article = {
   subsystem: string
   process: string
   subprocess: string
-  physicalFolder: string // средний каталог content/<subsystem>/<physicalFolder>/
+  physicalFolder: string
   href: string
   frontmatter: ArticleFrontmatter
 }
@@ -83,18 +86,19 @@ function readAllArticles(): Article[] {
             ? fm.publishedAt.toISOString().slice(0, 10)
             : (fm.publishedAt as string | undefined) ?? ''
 
-        const node = NODE_MAP[`${subsystem}/${folder}/${slug}`] ?? {
-          process: folder,
-          subprocess: folder,
-        }
+        const fmProcess = typeof fm.process === 'string' ? (fm.process as string) : undefined
+        const fmSubprocess = typeof fm.subprocess === 'string' ? (fm.subprocess as string) : undefined
+        const mapped = NODE_MAP[`${subsystem}/${folder}/${slug}`]
+        const process = fmProcess ?? mapped?.process ?? folder
+        const subprocess = fmSubprocess ?? mapped?.subprocess ?? folder
 
         articles.push({
           slug,
           subsystem,
-          process: node.process,
-          subprocess: node.subprocess,
+          process,
+          subprocess,
           physicalFolder: folder,
-          href: `/${subsystem}/${node.process}/${node.subprocess}/${slug}/`,
+          href: `/${subsystem}/${process}/${subprocess}/${slug}/`,
           frontmatter: {
             title: (fm.title as string) ?? slug,
             description: (fm.description as string) ?? '',
