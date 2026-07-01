@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const REPO_URL = 'https://github.com/DIdro/ai-scenarios'
+const GUIDE_URL = 'https://github.com/DIdro/ai-scenarios/blob/main/CONTRIBUTING.md'
 
 export default function ProposeModal({ onClose }: { onClose: () => void }) {
   const [sent, setSent] = useState(false)
@@ -32,7 +32,7 @@ export default function ProposeModal({ onClose }: { onClose: () => void }) {
 
             {/* ── Путь 1: GitHub ── */}
             <a
-              href={REPO_URL}
+              href={GUIDE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 bg-black text-white rounded-lg py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors"
@@ -43,7 +43,7 @@ export default function ProposeModal({ onClose }: { onClose: () => void }) {
               Добавить через GitHub
             </a>
             <p className="text-xs text-gray-400 mt-2 text-center">
-              Оформите сценарий как MDX по шаблону в README и откройте pull request.
+              Оформите сценарий как MDX по инструкции (CONTRIBUTING.md) и откройте pull request.
             </p>
 
             {/* ── разделитель ── */}
