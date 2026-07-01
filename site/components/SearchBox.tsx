@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 type PagefindResult = {
   id: string
@@ -25,10 +26,13 @@ export default function SearchBox({ variant = 'header' }: { variant?: 'header' |
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [isMac, setIsMac] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const [results, setResults] = useState<
     Array<{ url: string; title: string; excerpt: string }>
   >([])
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform))
@@ -95,6 +99,55 @@ export default function SearchBox({ variant = 'header' }: { variant?: 'header' |
     if (open) setTimeout(() => inputRef.current?.focus(), 50)
   }, [open])
 
+  const overlay = (
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/30 backdrop-blur-sm p-4"
+      onClick={() => setOpen(false)}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-xl w-full max-w-xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Поиск по сценариям..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full px-5 py-4 text-base border-b border-gray-100 focus:outline-none"
+        />
+        {results.length > 0 && (
+          <ul className="max-h-96 overflow-y-auto">
+            {results.map((r) => (
+              <li key={r.url}>
+                <a
+                  href={r.url}
+                  className="block px-5 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0"
+                >
+                  <div className="font-medium text-gray-900 mb-0.5 text-sm">{r.title}</div>
+                  <div
+                    className="text-xs text-gray-500 line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: r.excerpt }}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+        {query.trim() && results.length === 0 && (
+          <div className="px-5 py-6 text-sm text-gray-400 text-center">
+            Ничего не найдено
+          </div>
+        )}
+        {!query.trim() && (
+          <div className="px-5 py-6 text-xs text-gray-400">
+            Введите запрос для поиска по библиотеке. Esc — закрыть.
+          </div>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <>
       {variant === 'hero' ? (
@@ -125,54 +178,7 @@ export default function SearchBox({ variant = 'header' }: { variant?: 'header' |
         </button>
       )}
 
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/30 backdrop-blur-sm p-4"
-          onClick={() => setOpen(false)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-xl w-full max-w-xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Поиск по сценариям..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-5 py-4 text-base border-b border-gray-100 focus:outline-none"
-            />
-            {results.length > 0 && (
-              <ul className="max-h-96 overflow-y-auto">
-                {results.map((r) => (
-                  <li key={r.url}>
-                    <a
-                      href={r.url}
-                      className="block px-5 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0"
-                    >
-                      <div className="font-medium text-gray-900 mb-0.5 text-sm">{r.title}</div>
-                      <div
-                        className="text-xs text-gray-500 line-clamp-2"
-                        dangerouslySetInnerHTML={{ __html: r.excerpt }}
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {query.trim() && results.length === 0 && (
-              <div className="px-5 py-6 text-sm text-gray-400 text-center">
-                Ничего не найдено
-              </div>
-            )}
-            {!query.trim() && (
-              <div className="px-5 py-6 text-xs text-gray-400">
-                Введите запрос для поиска по библиотеке. Esc — закрыть.
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {open && mounted && createPortal(overlay, document.body)}
     </>
   )
 }
