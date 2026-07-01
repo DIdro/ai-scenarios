@@ -1,13 +1,22 @@
+<!--
+Полная инструкция: CONTRIBUTING.md (путь к файлу, frontmatter, шаблон статьи, пример, список отраслей).
+Прочитай её перед заполнением — там всё, чтобы сделать правильно с первого раза.
+-->
+
 ## Сценарий
 
-<!-- Кратко: что за сценарий и где внедряли -->
+<!-- Кратко: что за сценарий и где его внедряли (реальный опыт) -->
+
+## Узел дерева
+
+- Подсистема / Процесс / Подпроцесс: `...` / `...` / `...`
+- Файл: `site/content/<subsystem>/<process>/<slug>.mdx`
 
 ## Чеклист
 
-- [ ] Файл: `site/content/<subsystem>/<process>/<slug>.mdx`
-- [ ] frontmatter заполнен: `title`, `description`, `author`, `publishedAt`, `subprocess`, `industries`, `forWhom`
-- [ ] `subprocess` — валидный slug из [`site/lib/tree.ts`](../blob/main/site/lib/tree.ts)
-- [ ] `industries` — из списка в README
-- [ ] Формат: Что болит (+Stat) → Что делает ИИ (+Steps) → Что компания получает → Где нужен человек
-- [ ] Реальный опыт (не гипотетический)
+- [ ] Путь и `slug` корректны; `subprocess` — валидный slug из [`site/lib/tree.ts`](../blob/main/site/lib/tree.ts)
+- [ ] frontmatter заполнен: `title`, `description`, `author`, `authorOrg`, `publishedAt`, `subprocess`, `industries`, `forWhom`
+- [ ] `industries` — только из списка в CONTRIBUTING
+- [ ] Структура: Лид → Что болит (+Stat) → Что делает ИИ (+Steps) → [Вариации] → Что компания получает → Где нужен человек (+Callout)
+- [ ] Реальный опыт, не гипотетический; блок «Где нужен человек» честный
 - [ ] `cd site && npm run build` проходит локально
